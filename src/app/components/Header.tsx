@@ -37,7 +37,7 @@ export default function DashBoardLayout() {
             </Link>
             <div>
               <Link to="/Marketplace">Marketplace</Link>
-              <Link to="/">Dashboard</Link>
+              <Link to="/Dashboard">Dashboard</Link>
             </div>
           </div>
           <div className="menu">

@@ -15,6 +15,9 @@ module.exports = {
       fontSize: {
         base: "1.4rem",
       },
+      colors: {
+        "secondary-text": "#9ea5ac",
+      },
     },
   },
   plugins: [],

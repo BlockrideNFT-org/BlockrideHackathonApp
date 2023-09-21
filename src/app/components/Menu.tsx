@@ -22,7 +22,7 @@ export default function MyMenu() {
           <NavLink to="/Marketplace">Marketplace</NavLink>
         </Menu.Item>
         <Menu.Item>
-          <NavLink to="">Dashboard</NavLink>
+          <NavLink to="/Dashboard">Dashboard</NavLink>
         </Menu.Item>
         {publicKey && (
           <Menu.Item>
