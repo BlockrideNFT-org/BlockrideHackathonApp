@@ -18,6 +18,8 @@ module.exports = {
       colors: {
         "secondary-text": "#9ea5ac",
         green: "#58F154",
+        "secondary-orange": "#CD7A19",
+        "orange-tag": "#180E03",
       },
     },
   },

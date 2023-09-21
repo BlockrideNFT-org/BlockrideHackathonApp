@@ -2,7 +2,6 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import ConnectWallet from "app/components/ConnectWallet";
 import useModalState from "app/hooks/useModalState";
 import { styled } from "twin.macro";
-import { useNavigate } from "react-router-dom";
 
 import Avatar from "app/assets/icons/avatar.svg";
 import SolanaSVG from "app/assets/icons/sol.svg";
@@ -10,8 +9,6 @@ import SolanaSVG from "app/assets/icons/sol.svg";
 export default function SectionOne() {
   const { isOpen, closeModal } = useModalState();
   const { publicKey } = useWallet();
-
-  const navigate = useNavigate();
 
   return (
     <Container>
@@ -62,88 +59,6 @@ const Container = styled.div`
       font-weight: 400;
       text-align: center;
       margin-bottom: 49px;
-    }
-
-    > .actions {
-      justify-content: center;
-      display: flex;
-      gap: 15px;
-      margin-bottom: 49px;
-
-      button {
-        font-size: 16px;
-        font-weight: 500;
-        padding: 8px;
-        border-radius: 5px;
-      }
-
-      button:first-of-type {
-        background: linear-gradient(145deg, #ff991e 0%, #df0000 100%);
-        box-shadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06),
-          0px 4px 8px -2px rgba(16, 24, 40, 0.1);
-      }
-      button:last-of-type {
-        background: transparent;
-        border: 1px solid #ff991e;
-        padding: 8px 20px;
-      }
-    }
-
-    > .pill_list {
-      justify-content: center;
-      text-align: center;
-      display: flex;
-      gap: 24px;
-
-      @media screen and (max-width: 444px) {
-        gap: 10px;
-      }
-
-      > div {
-        padding: 24px;
-
-        @media screen and (max-width: 444px) {
-          padding: 15px;
-        }
-
-        @media screen and (max-width: 390px) {
-          padding: 10px;
-        }
-
-        h3 {
-          font-size: 16px;
-          font-weight: 700;
-
-          @media screen and (max-width: 543px) {
-            font-size: 12px;
-          }
-        }
-
-        p {
-          font-size: 16px;
-          font-weight: 500;
-
-          @media screen and (max-width: 543px) {
-            font-size: 12px;
-          }
-        }
-      }
-
-      > div:first-of-type {
-        border-radius: 20px;
-        border: 2px solid #29231b;
-        background: linear-gradient(
-          123deg,
-          rgb(255 153 30 / 64%) 0%,
-          #000 79.96%
-        );
-      }
-
-      > div:last-of-type {
-        border-radius: 20px;
-        border: 2px solid #29231b;
-        background: linear-gradient(123deg, rgb(223 0 0 / 51%) 0%, #000 79.96%);
-      }
     }
   }
 `;

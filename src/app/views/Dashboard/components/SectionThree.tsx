@@ -1,48 +1,27 @@
 import { styled } from "twin.macro";
-
-import Crystal from "app/assets/images/crystal.png";
+import ProofCard from "./Cards/ProofCard";
 
 export default function SectionThree() {
   return (
     <Container>
-      <div className="content">
-        <div className="columnOne">
-          <h1>How does this work?</h1>
-          <p>
-            Bus hire purchase refers to a financing arrangement where a company
-            or individual can acquire a bus by paying regular instalments over a
-            specified period. During this period, the company or individual is
-            considered the hirer of the bus, and ownership is transferred to
-            them upon the completion of all payments.{" "}
+      <div className="content mt-16 w-5/6 m-auto">
+        <span className="flex items-center">
+          <h1 className="text-5xl font-bold">Proofs</h1>
+          <div className="ml-12 py-3 px-6 text-2xl text-secondary-orange border bg-orange-tag border-secondary-orange rounded-full font-semibold">
+            0 of 3 Collected
+          </div>
+        </span>
+
+        <div className="mt-16 p-6 text-2xl text-secondary-orange border bg-orange-tag border-secondary-orange rounded-xl font-semibold">
+          <p className="ml-10">
+            To start contributing on the platform, you need to collect proofs.
+            By collecting more proofs, your voting power increases.
           </p>
-          <img src={Crystal} alt="blockride" />
         </div>
-        <div className="columnTwo">
-          <div>
-            <p>01</p>
-            <p>
-              Blockride pools funds from individual contributors and matches
-              them to fund bus acquisitions for reputable fleet managers on hire
-              purchase contract.
-            </p>
-          </div>
-          <div>
-            <p>02</p>
-            <p>
-              Contributors receives an NFT that serves as a representation of
-              their percentage share in the bus acquisition. This NFT ensures
-              transparency and verifiable proof of their ownership stake in the
-              project.
-            </p>
-          </div>
-          <div>
-            <p>03</p>
-            <p>
-              Fractional ownership extends the opportunity for a wide range of
-              stakeholders and investors to participate in the bus hire purchase
-              investment.
-            </p>
-          </div>
+        <div className="mt-20 flex text-2xl ">
+          <ProofCard title={"NIMC"} position={"left"} />
+          <ProofCard title={"Google"} position={"middle"} />
+          <ProofCard title={"TEL:"} position={"right"} />
         </div>
       </div>
     </Container>
@@ -50,10 +29,6 @@ export default function SectionThree() {
 }
 
 const Container = styled.div`
-  margin: 72px 116px 0 116px;
-  border: 2px solid #29231b;
-  padding: 49px 49px 0 49px;
-  border-radius: 10px;
   @media screen and (max-width: 691px) {
     margin: 72px 50px 0 50px;
   }
@@ -63,51 +38,10 @@ const Container = styled.div`
     padding: 49px 20px 0 20px;
   }
   > .content {
-    display: flex;
     gap: 48px;
 
     @media screen and (max-width: 785px) {
       flex-wrap: wrap;
       padding-bottom: 30px;
     }
-
-    > .columnOne {
-      margin-top: 16px;
-      h1 {
-        font-size: 36px;
-        font-weight: 700;
-      }
-
-      p {
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 28px;
-        color: #9ea5ac;
-      }
-
-      img {
-        margin-top: 44px;
-      }
-    }
-
-    > .columnTwo {
-      display: flex;
-      flex-direction: column;
-      gap: 21px;
-      > div {
-        p {
-          font-size: 12px;
-          font-weight: 700;
-        }
-
-        p:first-of-type {
-          color: #ff991e;
-        }
-
-        p:last-of-type {
-          color: #9ea5ac;
-        }
-      }
-    }
-  }
 `;

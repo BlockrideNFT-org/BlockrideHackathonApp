@@ -36,57 +36,6 @@ export default function SectionTwo() {
 }
 
 const Container = styled.div`
-  .header-container {
-    padding: 22px 100px;
-    @media screen and (max-width: 747px) {
-      padding: 0 20px;
-    }
-  }
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 33px;
-    background: #141414;
-    border: 1px solid #ff991e;
-    border-radius: 5px;
-    margin-top: 36px;
-
-    @media screen and (max-width: 669px) {
-      padding: 30px 20px;
-    }
-
-    @media screen and (max-width: 950px) {
-      img {
-        width: 100px;
-      }
-    }
-
-    @media screen and (max-width: 523px) {
-      padding: 0;
-      background: transparent;
-      border: none;
-    }
-
-    @media screen and (max-width: 471px) {
-      display: none;
-    }
-
-    div {
-      display: flex;
-      gap: 36px;
-    }
-    p {
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 500;
-
-      @media screen and (max-width: 754px) {
-        font-size: 12px;
-      }
-    }
-  }
-
   > .main {
     display: flex;
     justify-content: center;

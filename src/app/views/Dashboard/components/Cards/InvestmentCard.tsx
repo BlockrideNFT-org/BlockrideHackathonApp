@@ -26,7 +26,7 @@ function InvestmentCard({ cardType, position }: InvestmentCardProps) {
         </span>
         <span className="mt-8 mx-4 flex justify-between text-3xl text-secondary-text ">
           <p>Total Returns</p>
-          <p className="text-green">{`$1,254 claimable ->`}</p>
+          <p className="text-green">{`$1,254 claimable -->`}</p>
         </span>
       </>
     ),
@@ -48,7 +48,7 @@ function InvestmentCard({ cardType, position }: InvestmentCardProps) {
   return (
     <>
       <div
-        className={`ProductCard border border-[#29231B] p-12 rounded-2xl 
+        className={`border border-[#29231B] p-12 rounded-2xl 
     lg: w-1/3 h-96 flex flex-col justify-center ${cardMargins[position]}`}
       >
         {cardContent[cardType]}
