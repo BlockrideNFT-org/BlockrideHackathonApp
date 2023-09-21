@@ -17,6 +17,7 @@ module.exports = {
       },
       colors: {
         "secondary-text": "#9ea5ac",
+        green: "#58F154",
       },
     },
   },
