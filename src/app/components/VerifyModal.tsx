@@ -30,8 +30,6 @@ export default function VerifyModal(props: Props) {
     );
     sign!(message)
       .then((res) => {
-        // setSignature(bs58.encode(res));
-        console.log(publicKey?.toBase58());
         localStorage.setItem("sign", JSON.stringify(bs58.encode(res)));
         setSignature(bs58.encode(res));
         verifyWallet(bs58.encode(res), publicKey?.toBase58() as string).then(
