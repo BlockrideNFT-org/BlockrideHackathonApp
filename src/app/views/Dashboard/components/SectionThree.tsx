@@ -4,21 +4,21 @@ import ProofCard from "./Cards/ProofCard";
 export default function SectionThree() {
   return (
     <Container>
-      <div className="content mt-16 w-5/6 m-auto">
+      <div className="content mt-20 mb-28 w-5/6 m-auto">
         <span className="flex items-center">
-          <h1 className="text-5xl font-bold">Proofs</h1>
-          <div className="ml-12 py-3 px-6 text-2xl text-secondary-orange border bg-orange-tag border-secondary-orange rounded-full font-semibold">
+          <h1 className="text-6xl font-semibold leading-5">Proofs</h1>
+          <div className="ml-12 py-4 px-8 text-[16px] text-secondary-orange border bg-secondary-orange/10 border-secondary-orange rounded-full font-normal leading-8">
             0 of 3 Collected
           </div>
         </span>
 
-        <div className="mt-16 p-6 text-2xl text-secondary-orange border bg-orange-tag border-secondary-orange rounded-xl font-semibold">
+        <div className="mt-16 py-6 pl-14 text-[16px] text-secondary-orange border bg-secondary-orange/10 border-secondary-orange rounded-xl font-normal leading-8">
           <p className="ml-10">
             To start contributing on the platform, you need to collect proofs.
             By collecting more proofs, your voting power increases.
           </p>
         </div>
-        <div className="mt-20 flex text-2xl ">
+        <div className="mt-16 flex text-2xl ">
           <ProofCard title={"NIMC"} position={"left"} />
           <ProofCard title={"Google"} position={"middle"} />
           <ProofCard title={"TEL:"} position={"right"} />

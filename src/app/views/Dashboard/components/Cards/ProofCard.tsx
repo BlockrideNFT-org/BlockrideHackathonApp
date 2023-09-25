@@ -4,10 +4,6 @@ import telephoneSVG from "app/assets/icons/telephone.svg";
 import hexagonSVG from "app/assets/icons/hexagon.svg";
 import diamondSVG from "app/assets/icons/diamond.svg";
 
-interface ProofCardProps {
-  title: string;
-  position: string;
-}
 type ImageData = {
   [key: string]: {
     src: string;
@@ -20,6 +16,11 @@ type ImageData = {
     };
   };
 };
+
+interface ProofCardProps {
+  title: string;
+  position: string;
+}
 
 function ProofCard({ title, position }: ProofCardProps) {
   const cardMargins: Record<string, string> = {
@@ -65,9 +66,9 @@ function ProofCard({ title, position }: ProofCardProps) {
     <>
       <div
         className={`border border-[#29231B] rounded-2xl 
-    lg: w-[270px] h-[275px] flex flex-col ${cardMargins[position]}`}
+    lg: w-[270px] h-[285px] flex flex-col ${cardMargins[position]}`}
       >
-        <div className="w-fit ml-14 my-14 relative">
+        <div className="w-fit ml-14 mt-14 mb-12 relative">
           <img
             className="w-[92px] h-[92px]"
             src={images[title].borderSVG}
@@ -80,13 +81,13 @@ function ProofCard({ title, position }: ProofCardProps) {
           />
         </div>
 
-        <span className="ml-8 flex items-center">
+        <span className="ml-14 flex leading-8 items-center">
           <h1 className="text-4xl font-semibold">{title}</h1>
-          <div className="ml-6 py-1 px-10 text-2xl text-secondary-orange border bg-orange-tag border-secondary-orange rounded-full font-semibold">
+          <div className="ml-5 py-1 px-8 text-[16px] text-secondary-orange border bg-orange-tag border-secondary-orange rounded-full font-normal">
             Claim
           </div>
         </span>
-        <p className="mt-6 ml-6 flex text-3xl text-secondary-text ">
+        <p className="mt-6 mx-14 flex text-[16px] leading-8 text-secondary-text ">
           To claim this proof, you have to connect your Google account.
         </p>
       </div>

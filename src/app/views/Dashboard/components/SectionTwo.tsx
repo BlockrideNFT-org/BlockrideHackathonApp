@@ -8,7 +8,7 @@ export default function SectionTwo() {
 
   return (
     <Container>
-      <div className="content w-5/6 h-32 my-4 m-auto flex items-center text-3xl">
+      <div className="content h-[38px] w-5/6 mt-14 mb-20 m-auto flex items-center text-3xl">
         <h1
           className={`ml-16 cursor-pointer ${
             activeTab !== "Details" && "text-secondary-text"
@@ -26,7 +26,7 @@ export default function SectionTwo() {
           Investments
         </h1>
       </div>
-      <div className="content w-5/6 flex justify-center items-center m-auto">
+      <div className="content w-5/6 flex items-center m-auto">
         <InvestmentCard cardType={"totalInvested"} position={"left"} />
         <InvestmentCard cardType={"totalReturns"} position={"middle"} />
         <InvestmentCard cardType={"activeInvestments"} position={"right"} />
