@@ -1,4 +1,5 @@
-import SolanaSVG from "app/assets/icons/sol.svg";
+import USDCSVG from "app/assets/icons/usdc.png";
+import { ReactComponent as ClaimableArrow } from "app/assets/images/arrow-investment-card.svg";
 
 interface InvestmentCardProps {
   cardType: string;
@@ -10,7 +11,7 @@ function InvestmentCard({ cardType, position }: InvestmentCardProps) {
     totalInvested: (
       <>
         <span className="text-6xl ml-2 flex items-center font-semibold">
-          <img className="w-12 h-12" src={SolanaSVG} alt="Solana SVG" />
+          <img className="w-12 h-12" src={USDCSVG} alt="Solana SVG" />
           <h1>1,457,238</h1>
         </span>
         <p className="mt-8 mx-4 flex text-3xl text-secondary-text ">
@@ -21,12 +22,15 @@ function InvestmentCard({ cardType, position }: InvestmentCardProps) {
     totalReturns: (
       <>
         <span className="text-6xl ml-2 flex items-center font-semibold">
-          <img className="w-12 h-12" src={SolanaSVG} alt="Solana SVG" />
+          <img className="w-12 h-12" src={USDCSVG} alt="Solana SVG" />
           <h1>148,250</h1>
         </span>
         <span className="mt-8 mx-4 flex justify-between text-3xl text-secondary-text ">
           <p>Total Returns</p>
-          <p className="text-green">{`$1,254 claimable -->`}</p>
+          <span className="text-green items-center cursor-pointer flex stroke-green">
+            <p>{`$1,254 claimable`}</p>
+            <ClaimableArrow className="ml-2" fill="current" stroke="current" />
+          </span>
         </span>
       </>
     ),

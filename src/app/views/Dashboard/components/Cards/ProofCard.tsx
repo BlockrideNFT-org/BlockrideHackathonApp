@@ -1,9 +1,25 @@
-import SolanaSVG from "app/assets/icons/sol.svg";
+import NIMCSVG from "app/assets/icons/nimc.svg";
+import GoogleSVG from "app/assets/icons/google.svg";
+import telephoneSVG from "app/assets/icons/telephone.svg";
+import hexagonSVG from "app/assets/icons/hexagon.svg";
+import diamondSVG from "app/assets/icons/diamond.svg";
 
 interface ProofCardProps {
   title: string;
   position: string;
 }
+type ImageData = {
+  [key: string]: {
+    src: string;
+    borderSVG: string;
+    dimensions: {
+      standard: {
+        width: string;
+        height: string;
+      };
+    };
+  };
+};
 
 function ProofCard({ title, position }: ProofCardProps) {
   const cardMargins: Record<string, string> = {
@@ -12,22 +28,58 @@ function ProofCard({ title, position }: ProofCardProps) {
     right: "ml-8",
   };
 
-  const images: Record<string, string> = {
-    NIMC: SolanaSVG,
-    Google: SolanaSVG,
-    "TEL:": SolanaSVG,
+  const images: ImageData = {
+    NIMC: {
+      src: NIMCSVG,
+      borderSVG: hexagonSVG,
+      dimensions: {
+        standard: {
+          width: "59px",
+          height: "59px",
+        },
+      },
+    },
+    Google: {
+      src: GoogleSVG,
+      borderSVG: hexagonSVG,
+      dimensions: {
+        standard: {
+          width: "54px",
+          height: "55px",
+        },
+      },
+    },
+    "TEL:": {
+      src: telephoneSVG,
+      borderSVG: diamondSVG,
+      dimensions: {
+        standard: {
+          width: "49px",
+          height: "42px",
+        },
+      },
+    },
   };
+
   return (
     <>
       <div
-        className={`border border-[#29231B] p-8 rounded-2xl 
-    lg: w-[300px] h-[300px] flex flex-col ${cardMargins[position]}`}
+        className={`border border-[#29231B] rounded-2xl 
+    lg: w-[270px] h-[275px] flex flex-col ${cardMargins[position]}`}
       >
-        <img
-          className="mt-6 ml-8 mb-14 w-28 h-28"
-          src={images[title]}
-          alt={`${title} logo`}
-        />
+        <div className="w-fit ml-14 my-14 relative">
+          <img
+            className="w-[92px] h-[92px]"
+            src={images[title].borderSVG}
+            alt=""
+          />
+          <img
+            className={`w-[${images[title].dimensions.standard.width}] h-[${images[title].dimensions.standard.width}] absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2`}
+            src={images[title].src}
+            alt={`${title} logo`}
+          />
+        </div>
+
         <span className="ml-8 flex items-center">
           <h1 className="text-4xl font-semibold">{title}</h1>
           <div className="ml-6 py-1 px-10 text-2xl text-secondary-orange border bg-orange-tag border-secondary-orange rounded-full font-semibold">
