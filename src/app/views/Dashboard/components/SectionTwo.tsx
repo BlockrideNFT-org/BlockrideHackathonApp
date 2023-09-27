@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { styled } from "twin.macro";
 
 import InvestmentCard from "./Cards/InvestmentCard";
 
@@ -7,10 +6,10 @@ export default function SectionTwo() {
   const [activeTab, setActiveTab] = useState("Details");
 
   return (
-    <Container>
-      <div className="content h-[38px] w-5/6 mt-14 mb-20 m-auto flex items-center text-3xl">
+    <div>
+      <div className="content h-[38px] w-5/6 mt-14 mb-20 m-auto flex items-center text-3xl mobile:mt-[43px] mobile:mb-[30px] mobile:text-[16px] mobile:h-auto">
         <h1
-          className={`ml-16 cursor-pointer ${
+          className={`ml-16 cursor-pointer mobile:ml-0 ${
             activeTab !== "Details" && "text-secondary-text"
           }`}
           onClick={() => setActiveTab("Details")}
@@ -18,7 +17,7 @@ export default function SectionTwo() {
           Details
         </h1>
         <h1
-          className={`ml-56 cursor-pointer ${
+          className={`ml-56 cursor-pointer mobile:ml-12 ${
             activeTab !== "Investments" && "text-secondary-text"
           }`}
           onClick={() => setActiveTab("Investments")}
@@ -26,33 +25,11 @@ export default function SectionTwo() {
           Investments
         </h1>
       </div>
-      <div className="content w-5/6 flex items-center m-auto">
-        <InvestmentCard cardType={"totalInvested"} position={"left"} />
-        <InvestmentCard cardType={"totalReturns"} position={"middle"} />
-        <InvestmentCard cardType={"activeInvestments"} position={"right"} />
+      <div className="content w-5/6 flex items-center m-auto mobile:flex-col">
+        <InvestmentCard cardType={"totalInvested"} position={"first"} />
+        <InvestmentCard cardType={"totalReturns"} position={"second"} />
+        <InvestmentCard cardType={"activeInvestments"} position={"third"} />
       </div>
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  > .main {
-    display: flex;
-    justify-content: center;
-    margin-top: 72px;
-
-    @media screen and (max-width: 600px) {
-      margin-top: 30px;
-    }
-
-    @media screen and (max-width: 465px) {
-      margin-top: 0;
-    }
-
-    svg {
-      @media screen and (max-width: 599px) {
-        padding: 0 30px;
-      }
-    }
-  }
-`;
