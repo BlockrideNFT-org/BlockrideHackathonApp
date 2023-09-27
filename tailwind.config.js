@@ -15,6 +15,11 @@ module.exports = {
       fontSize: {
         base: "1.4rem",
       },
+      colors: {
+        "secondary-text": "#9ea5ac",
+        green: "#5EFF5A",
+        "secondary-orange": "#FF991E",
+      },
     },
   },
   plugins: [],
