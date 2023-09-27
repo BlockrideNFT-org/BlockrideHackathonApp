@@ -70,7 +70,6 @@ export default function VerifyModal(props: Props) {
 
           <p>Verify Wallet to prove ownership. No SOL will be charged</p>
           <div className="action">
-            <button onClick={closeModal}>Cancel</button>
             <button onClick={() => signMessage()} disabled={verifing}>
               {verifing ? "Verifing" : "Verify Wallet"}
             </button>
@@ -127,9 +126,12 @@ const ModalContent = styled.div`
       font-weight: 500;
       padding: 8px;
       border-radius: 5px;
+      background: linear-gradient(145deg, #ff991e 0%, #df0000 100%);
+      box-shadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06),
+        0px 4px 8px -2px rgba(16, 24, 40, 0.1);
     }
 
-    button:last-of-type {
+    /* button:last-of-type {
       background: linear-gradient(145deg, #ff991e 0%, #df0000 100%);
       box-shadow: 0px 2px 4px -2px rgba(16, 24, 40, 0.06),
         0px 4px 8px -2px rgba(16, 24, 40, 0.1);
@@ -138,6 +140,6 @@ const ModalContent = styled.div`
       background: transparent;
       border: 1px solid #ff991e;
       padding: 8px 20px;
-    }
+    } */
   }
 `;
