@@ -23,6 +23,8 @@ export default function VerifyModal(props: Props) {
 
   const { signMessage: sign, publicKey } = useWallet();
 
+  console.log(publicKey?.toBase58());
+
   const signMessage = () => {
     setVerifing(true);
     const message = new TextEncoder().encode(
