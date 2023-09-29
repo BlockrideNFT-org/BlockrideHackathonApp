@@ -7,7 +7,7 @@ export default function SectionTwo() {
 
   return (
     <div>
-      <div className="content h-[38px] w-5/6 mt-14 mb-20 m-auto flex items-center text-3xl mobile:mt-[43px] mobile:mb-[30px] mobile:text-[16px] mobile:h-auto">
+      <div className="content h-[38px] w-5/6 my-14 m-auto flex items-center text-3xl mobile:mt-[43px] mobile:mb-[30px] mobile:text-[16px] mobile:h-auto">
         <h1
           className={`ml-16 cursor-pointer mobile:ml-0 ${
             activeTab !== "Details" && "text-secondary-text"

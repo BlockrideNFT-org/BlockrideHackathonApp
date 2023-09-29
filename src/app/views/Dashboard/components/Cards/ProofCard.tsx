@@ -2,6 +2,7 @@ import NIMCSVG from "app/assets/icons/nimc.svg";
 import GoogleSVG from "app/assets/icons/google.svg";
 import telephoneSVG from "app/assets/icons/telephone.svg";
 import hexagonSVG from "app/assets/icons/hexagon.svg";
+import pentagonSVG from "app/assets/icons/pentagon.svg";
 import diamondSVG from "app/assets/icons/diamond.svg";
 import { useEffect, useState } from "react";
 
@@ -19,6 +20,7 @@ type ImageData = {
         height: string;
       };
     };
+    text: string;
   };
 };
 
@@ -54,7 +56,7 @@ function ProofCard({ title, position }: ProofCardProps) {
     },
   };
 
-  const images: ImageData = {
+  const cardData: ImageData = {
     NIMC: {
       src: NIMCSVG,
       borderSVG: hexagonSVG,
@@ -68,10 +70,11 @@ function ProofCard({ title, position }: ProofCardProps) {
           height: "33px",
         },
       },
+      text: "To claim this proof you have to connect your National ID card or Driver’s License.",
     },
     Google: {
       src: GoogleSVG,
-      borderSVG: hexagonSVG,
+      borderSVG: pentagonSVG,
       dimensions: {
         standard: {
           width: "54px",
@@ -82,6 +85,7 @@ function ProofCard({ title, position }: ProofCardProps) {
           height: "31px",
         },
       },
+      text: "To claim this proof you have to connect your Google account.",
     },
     "TEL:": {
       src: telephoneSVG,
@@ -96,6 +100,7 @@ function ProofCard({ title, position }: ProofCardProps) {
           height: "22px",
         },
       },
+      text: "To claim this proof you have to verify your phone number.",
     },
   };
 
@@ -104,16 +109,16 @@ function ProofCard({ title, position }: ProofCardProps) {
       className={`border border-[#29231B] rounded-2xl 
     lg: w-[270px] h-[285px] flex flex-col ${cardMargins.standard[position]} ${cardMargins.mobile[position]} mobile:w-full mobile:h-auto mobile:py-8`}
     >
-      <div className="w-fit ml-14 mt-14 mb-12 relative mobile:mt-0 mobile:mb-5">
+      <div className="w-fit ml-14 mt-10 mb-8 relative mobile:mt-0 mobile:mb-5">
         <img
           className="w-[92px] h-[92px] mobile:w-[55px] mobile:h-[55px]"
-          src={images[title].borderSVG}
+          src={cardData[title].borderSVG}
           alt=""
         />
         <img
-          className={`w-[${images[title].dimensions.standard.width}] h-[${images[title].dimensions.standard.height}] absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 mobile:w-[${images[title].dimensions.mobile.width}] mobile:h-[${images[title].dimensions.mobile.height}]`}
-          style={viewportWidth <= 480 ? images[title].dimensions.mobile : {}}
-          src={images[title].src}
+          className={`w-[${cardData[title].dimensions.standard.width}] h-[${cardData[title].dimensions.standard.height}] absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 mobile:w-[${cardData[title].dimensions.mobile.width}] mobile:h-[${cardData[title].dimensions.mobile.height}]`}
+          style={viewportWidth <= 480 ? cardData[title].dimensions.mobile : {}}
+          src={cardData[title].src}
           alt={`${title} logo`}
         />
       </div>
@@ -124,8 +129,8 @@ function ProofCard({ title, position }: ProofCardProps) {
           Claim
         </div>
       </span>
-      <p className="mt-5 mx-14 flex text-[16px] leading-8 text-secondary-text mobile:text-[14px]">
-        To claim this proof, you have to connect your Google account.
+      <p className="mt-5 mx-12 flex text-[16px] leading-8 text-secondary-text mobile:text-[14px]">
+        {cardData[title].text}
       </p>
     </div>
   );
