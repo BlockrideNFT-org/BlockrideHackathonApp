@@ -16,8 +16,10 @@ export const verifyWallet = (signature: string, pubkey: string) => {
 };
 
 export const confirmUser = (pubkey: string) => {
-  return request.post(`/confirmuser`, {
-    pubkey,
+  return request.get(`/confirmuser`, {
+    params: {
+      pubkey,
+    },
   });
 };
 
