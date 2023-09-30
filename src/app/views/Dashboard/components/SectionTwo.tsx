@@ -1,9 +1,20 @@
 import { useState } from "react";
 
+import DetailsCard from "./Cards/DetailsCard";
 import InvestmentCard from "./Cards/InvestmentCard";
+
+import investment1Src from "app/assets/images/investment1.png";
+import investment2Src from "app/assets/images/investment2.png";
+import investment3Src from "app/assets/images/investment3.png";
 
 export default function SectionTwo() {
   const [activeTab, setActiveTab] = useState("Details");
+
+  const investmentData: Record<string, string> = {
+    BLRS00001: investment1Src,
+    BLRS00002: investment2Src,
+    BLRS00003: investment3Src,
+  };
 
   return (
     <div>
@@ -25,11 +36,24 @@ export default function SectionTwo() {
           Investments
         </h1>
       </div>
-      <div className="content w-5/6 flex items-center m-auto mobile:flex-col">
-        <InvestmentCard cardType={"totalInvested"} position={"first"} />
-        <InvestmentCard cardType={"totalReturns"} position={"second"} />
-        <InvestmentCard cardType={"activeInvestments"} position={"third"} />
-      </div>
+      {activeTab === "Details" ? (
+        <div className="content w-5/6 flex items-center m-auto mobile:flex-col">
+          <DetailsCard cardType={"totalInvested"} position={"first"} />
+          <DetailsCard cardType={"totalReturns"} position={"second"} />
+          <DetailsCard cardType={"activeInvestments"} position={"third"} />
+        </div>
+      ) : (
+        <div className="content w-5/6 flex items-center m-auto mobile:flex-col">
+          {Object.keys(investmentData).map((name, index) => (
+            <InvestmentCard
+              key={`investment${index}`}
+              name={name}
+              imageSrc={investmentData[name]}
+              position={index.toString()}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
