@@ -26,3 +26,11 @@ export const confirmUser = (pubkey: string) => {
 export const registerUser = (data: registerData) => {
   return request.post(`/signup`, data);
 };
+
+export const getUserProfile = (pubkey: string) => {
+  return request.get("/profile", {
+    params: {
+      pubkey,
+    },
+  });
+};

@@ -5,10 +5,16 @@ import useModalState from "app/hooks/useModalState";
 import Avatar from "app/assets/icons/avatar.svg";
 import SolanaSVG from "app/assets/icons/sol.svg";
 import UnionSVG from "app/assets/icons/union.svg";
+import { Profile } from "..";
 
-export default function SectionOne() {
+interface Props {
+  profile: Profile | undefined;
+}
+
+export default function SectionOne(props: Props) {
   const { isOpen, closeModal } = useModalState();
   const { publicKey } = useWallet();
+  const { profile } = props;
 
   return (
     <div className="flex justify-center mt-28 mobile:mt-12">
@@ -19,7 +25,7 @@ export default function SectionOne() {
           alt={Avatar}
         />
         <div className="flex ml-6 leading-3 font-semibold flex-col justify-center">
-          <h1 className="text-7xl mobile:text-[24px]">@Username</h1>
+          <h1 className="text-7xl mobile:text-[24px]">{`@${profile?.username}`}</h1>
           <span
             className="mt-2 flex text-4xl cursor-pointer mobile:text-2xl items-center text-secondary-text"
             onClick={async () =>
@@ -34,9 +40,7 @@ export default function SectionOne() {
             />
             <p className="mx-4">
               {publicKey &&
-                `${publicKey.toString().slice(0, 4)}...${publicKey
-                  .toString()
-                  .slice(-4)}`}
+                `${profile?.pubkey.slice(0, 4)}...${profile?.pubkey.slice(-4)}`}
             </p>
             <img
               className="w-[13px] h-[15px] w-[12px] h-[14px]"

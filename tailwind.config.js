@@ -6,6 +6,9 @@ module.exports = {
       height: {
         page: "calc(100vh - 64px)",
       },
+      animation: {
+        "spin-fast": "spin 0.5s linear infinite",
+      },
       screens: {
         smalldesktop: { max: "1024px" }, // small desktop
         tablet: { max: "768px" },
