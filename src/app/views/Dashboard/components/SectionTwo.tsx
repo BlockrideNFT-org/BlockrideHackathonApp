@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import DetailsCard from "./Cards/DetailsCard";
 import InvestmentCard from "./Cards/InvestmentCard";
 
@@ -7,9 +5,15 @@ import investment1Src from "app/assets/images/investment1.png";
 import investment2Src from "app/assets/images/investment2.png";
 import investment3Src from "app/assets/images/investment3.png";
 
-export default function SectionTwo() {
-  const [activeTab, setActiveTab] = useState("Details");
+interface SectionTwoProps {
+  activeTab: string;
+  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
+}
 
+export default function SectionTwo({
+  activeTab,
+  setActiveTab,
+}: SectionTwoProps) {
   const investmentData: Record<string, string> = {
     BLRS00001: investment1Src,
     BLRS00002: investment2Src,
