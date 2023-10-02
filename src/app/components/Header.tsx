@@ -1,5 +1,5 @@
 import { styled } from "twin.macro";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 import { ReactComponent as Logo } from "app/assets/icons/logo.svg";
 
@@ -17,6 +17,10 @@ export default function DashBoardLayout() {
   const { isOpen, closeModal, openModal } = useModalState();
 
   const { publicKey } = useWallet();
+
+  const location = useLocation();
+
+  console.log(location);
 
   useEffect(() => {
     const verified = JSON.parse(localStorage.getItem("verified") || "{}");
@@ -54,8 +58,8 @@ export default function DashBoardLayout() {
       </Header>
 
       <Outlet />
+      {location.pathname === "/" && <Footer />}
 
-      <Footer />
       <VerifyModal open={isOpen} closeModal={closeModal} />
     </>
   );

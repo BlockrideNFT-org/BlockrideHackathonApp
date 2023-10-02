@@ -37,7 +37,7 @@ function InvestmentCard({ cardType, position }: InvestmentCardProps) {
             148,250
           </h1>
         </span>
-        <span className="mt-9 mx-4 flex justify-between leading-8 text-[16px] text-secondary-text mobile:inline mobile:mt-0 mobile:mx-0">
+        <span className="mt-9 mx-4 gap-[10px] flex justify-between leading-8 text-[16px] text-secondary-text mobile:inline mobile:mt-0 mobile:mx-0">
           <p className="mobile:mt-0 mobile:mx-0 mobile:leading-[20px] mobile:text-[14px]">
             Total Returns
           </p>
