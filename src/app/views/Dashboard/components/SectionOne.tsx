@@ -17,27 +17,33 @@ export default function SectionOne(props: Props) {
   const { profile } = props;
 
   return (
-    <div className="flex justify-center mt-40 mobile:mt-12">
+    <div className="flex justify-center mt-28 mobile:mt-12">
       <div className="content w-5/6 flex ">
         <img
-          className="w-48 h-48 mobile:w-24 mobile:h-24"
+          className="w-36 h-36 mobile:w-24 mobile:h-24"
           src={Avatar}
           alt={Avatar}
         />
-        <div className="flex ml-9 leading-3 font-semibold flex-col justify-center">
+        <div className="flex ml-6 leading-3 font-semibold flex-col justify-center">
           <h1 className="text-7xl mobile:text-[24px]">{`@${profile?.username}`}</h1>
-          <span className="mt-2 flex text-4xl mobile:text-2xl items-center text-secondary-text">
+          <span
+            className="mt-2 flex text-4xl cursor-pointer mobile:text-2xl items-center text-secondary-text"
+            onClick={async () =>
+              publicKey &&
+              (await navigator.clipboard.writeText(publicKey.toString()))
+            }
+          >
             <img
               className="w-[17px] h-[15px] mobile:w-[14px] mobile:h-[13px]"
               src={SolanaSVG}
               alt="Solana SVG"
             />
-            <p className="ml-4">
+            <p className="mx-4">
               {publicKey &&
                 `${profile?.pubkey.slice(0, 4)}...${profile?.pubkey.slice(-4)}`}
             </p>
             <img
-              className="ml-4 w-[13px] h-[15px] w-[12px] h-[14px]"
+              className="w-[13px] h-[15px] w-[12px] h-[14px]"
               src={UnionSVG}
               alt="Union SVG"
             />

@@ -13,7 +13,7 @@ export type Profile = {
 
 export default function Home() {
   const { publicKey } = useWallet();
-
+  const [activeTab, setActiveTab] = useState("Details");
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState("");
   const [profile, setProfile] = useState<Profile>();
@@ -40,8 +40,8 @@ export default function Home() {
   return (
     <LoaderContainer loading={isLoading} error={!!err} errorMessage={err}>
       <SectionOne profile={profile} />
-      <SectionTwo />
-      <SectionThree />
+      <SectionTwo activeTab={activeTab} setActiveTab={setActiveTab} />
+      {activeTab === "Details" && <SectionThree />}
     </LoaderContainer>
   );
 }
