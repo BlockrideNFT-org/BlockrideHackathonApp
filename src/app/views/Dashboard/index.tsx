@@ -38,10 +38,16 @@ export default function Home() {
   }, [publicKey]);
 
   return (
-    <LoaderContainer loading={isLoading} error={!!err} errorMessage={err}>
-      <SectionOne profile={profile} />
-      <SectionTwo activeTab={activeTab} setActiveTab={setActiveTab} />
-      {activeTab === "Details" && <SectionThree />}
-    </LoaderContainer>
+    <>
+      {isLoading ? (
+        <LoaderContainer loading={isLoading} error={!!err} errorMessage={err} />
+      ) : (
+        <>
+          <SectionOne profile={profile} />
+          <SectionTwo activeTab={activeTab} setActiveTab={setActiveTab} />
+          {activeTab === "Details" && <SectionThree />}
+        </>
+      )}
+    </>
   );
 }
