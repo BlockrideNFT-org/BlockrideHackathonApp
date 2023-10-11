@@ -1,18 +1,15 @@
-import SectionOne from './components/SectionOne'
-import SectionTwo from './components/SectionTwo'
+import SectionOne from "./components/SectionOne";
+import SectionTwo from "./components/SectionTwo";
+import CampaignSection from "./components/CampaignSection";
 
 function index() {
-
-  
-
   return (
     <>
-        {/* <SectionOne/> */}
-        <SectionTwo/>
-
-
+      {/* <SectionOne/> */}
+      <CampaignSection />
+      <SectionTwo />
     </>
-  )
+  );
 }
 
-export default index
+export default index;
