@@ -1,43 +1,50 @@
 import tw, { styled } from "twin.macro";
+
 import { ReactComponent as InvestmentIcon } from "app/assets/icons/investments.svg";
 import { ReactComponent as FleetIcon } from "app/assets/icons/fleets.svg";
 import { ReactComponent as OngoingIcon } from "app/assets/icons/ongoing.svg";
-import { ReactComponent as ArrowUp } from "app/assets/icons/arrow-up-outlined.svg";
 import { ReactComponent as SearchIcon } from "app/assets/icons/search.svg";
+import { ReactComponent as ArrowUp } from "app/assets/icons/arrow-up-outlined.svg";
 import { ReactComponent as Logo } from "app/assets/icons/blockride-logo.svg";
 import { ReactComponent as Coin } from "app/assets/icons/coin.svg";
 import ListBox from "app/components/ListBox";
 import Table from "app/components/Table";
-import { useNavigate } from "react-router-dom";
+import ChartsSection from "./components/ChartsSection";
 
-export default function DashBoard() {
-  const navigate = useNavigate();
-
+export default function Analytics() {
   return (
     <Container>
-      <div className="flex justify-between items-center">
-        <div>
-          <p className="text-[18px] font-normal mb-[8px] leading-[24px]">
-            Hello, <span className="font-[500]">Emmanuel</span>
-          </p>
-          <p className="text-[18px] font-[300] leading-[24px]">
-            Start an investment today!
-          </p>
-        </div>
-
-        <button
-          onClick={() => navigate("/marketplace")}
-          className=" text-[16px] text-[#111111] font-medium border border-[#FE991E] px-[32px] py-[12px] rounded-[100px] bg-[#FE991E]"
-        >
-          Purchase fleet
-        </button>
-      </div>
+      <p className="text-[20px] font-[500]">Analytics</p>
 
       <div className="cards">
         <div className="card">
           <InvestmentIcon />
           <div>
-            <p>Total Amount Invested</p>
+            <p>Total Vehicles Financed</p>
+            <div>
+              <p>$0</p>
+              <div>
+                <ArrowUp />0
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card">
+          <InvestmentIcon />
+          <div>
+            <p>Unique Fractional Owners</p>
+            <div>
+              <p>0</p>
+              <div>
+                <ArrowUp />0
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card">
+          <OngoingIcon />
+          <div>
+            <p>Total Partners</p>
             <div>
               <p>$0</p>
               <div>
@@ -49,19 +56,22 @@ export default function DashBoard() {
         <div className="card">
           <FleetIcon />
           <div>
-            <p>Total No. of Vehicles</p>
+            <p>Carbon Offset</p>
             <div>
-              <p>0</p>
+              <p>$0</p>
               <div>
                 <ArrowUp />0
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="cards">
         <div className="card">
-          <InvestmentIcon />
+          <FleetIcon />
           <div>
-            <p>Total ROI</p>
+            <p>Total Investment</p>
             <div>
               <p>$0</p>
               <div>
@@ -73,7 +83,19 @@ export default function DashBoard() {
         <div className="card">
           <OngoingIcon />
           <div>
-            <p>Ongoing Investment</p>
+            <p>Total Revenue Distributed</p>
+            <div>
+              <p>0</p>
+              <div>
+                <ArrowUp />0
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="card">
+          <InvestmentIcon />
+          <div>
+            <p>Total Revenue Generated</p>
             <div>
               <p>$0</p>
               <div>
@@ -86,7 +108,7 @@ export default function DashBoard() {
 
       <TopInvestments>
         <div className="header">
-          <p>Top Investments</p>
+          <p>Top Fleets</p>
           <div className="flex gap-[20px] items-center w-[440px]">
             <div className="search">
               <SearchIcon />
@@ -252,6 +274,8 @@ export default function DashBoard() {
           </Table.Row>
         </Table>
       </TopInvestments>
+
+      <ChartsSection />
     </Container>
   );
 }

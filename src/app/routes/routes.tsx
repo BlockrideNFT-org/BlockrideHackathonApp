@@ -1,24 +1,52 @@
 import { RouteObject } from "react-router-dom";
-import Home from "app/views/Home";
-import Marketplace from "app/views/Marketplace";
-import Dashboard from "app/views/Dashboard";
-import Header from "app/components/Header";
+
+import DashboardHeader from "app/components/DashBoardHeader";
+import DashBoardLayout from "app/components/DashBoardLayout";
+import DashboardSideNav from "app/components/DashBoardSideNav";
+import DashBoard from "app/views/Dashboard";
+import Analytics from "app/views/Analytics";
+import MarketPlace from "app/views/Marketplace";
+import FleetDetails from "app/views/FleetDetails";
+import Profile from "app/views/Profile";
+import Documentation from "app/views/Documentation";
+import ContactUs from "app/views/ContactUs";
 
 const routesObject: RouteObject[] = [
   {
-    element: <Header />,
+    element: (
+      <DashBoardLayout
+        header={<DashboardHeader />}
+        sidenav={<DashboardSideNav />}
+      />
+    ),
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <DashBoard />,
       },
       {
-        path: "/Marketplace",
-        element: <Marketplace />,
+        path: "/analytics",
+        element: <Analytics />,
       },
       {
-        path: "/Dashboard",
-        element: <Dashboard />,
+        path: "/marketplace",
+        element: <MarketPlace />,
+      },
+      {
+        path: "/marketplace/:id",
+        element: <FleetDetails />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/documentation",
+        element: <Documentation />,
+      },
+      {
+        path: "/contact-us",
+        element: <ContactUs />,
       },
     ],
   },
