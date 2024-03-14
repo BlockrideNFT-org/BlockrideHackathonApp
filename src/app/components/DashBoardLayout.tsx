@@ -52,12 +52,12 @@ export default function DashBoardLayout(props: Props) {
   const location = useLocation();
 
   useEffect(() => {
-    if (wallet) {
+    if (publicKey) {
       navigate("/dashboard");
     } else {
       navigate("/");
     }
-  }, [wallet]);
+  }, [publicKey]);
 
   useUpdatedEffect(() => {
     if (contentRef.current) {
@@ -82,7 +82,7 @@ export default function DashBoardLayout(props: Props) {
         <div className="header">{header}</div>
         <section className="body">
           <aside className="sidebar">{sidenav}</aside>
-          {!wallet && (
+          {!publicKey && (
             <div className="overlay">
               <div className="h-[90vh] flex justify-center items-center">
                 <div className="flex justify-center flex-col items-center w-[1000px] gap-[10px]">
