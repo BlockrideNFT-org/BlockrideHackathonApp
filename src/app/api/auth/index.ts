@@ -16,11 +16,7 @@ export const getMessage = () => {
 };
 
 export const verifyWallet = (data: verifyWallet) => {
-  return request.post(`/auth/message`, {
-    params: {
-      ...data,
-    },
-  });
+  return request.post(`/auth/message`, data);
 };
 
 export const confirmUser = (pubkey: string) => {

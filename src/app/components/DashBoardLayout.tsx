@@ -25,6 +25,8 @@ import Modal from "./Modal";
 import useModalState from "app/hooks/useModalState";
 import Loader from "./Loader";
 import useUpdatedEffect from "app/hooks/useUpdatedEffect";
+import useVerifyWallet from "app/hooks/useVerifyWallet";
+import bs58 from "bs58";
 
 interface Props {
   header: ReactNode;
@@ -43,13 +45,17 @@ export default function DashBoardLayout(props: Props) {
 
   const { wallet, publicKey, disconnect, signMessage: sign } = useWallet();
 
-  const { data: message } = useGetSignMessage();
+  const { data: message, isLoading: gettingMessage } = useGetSignMessage();
+
+  const { isLoading: verifyingwallet, verifyWallet } = useVerifyWallet();
 
   console.log(message);
 
   const contentRef = useRef<HTMLDivElement>(null);
 
   const location = useLocation();
+
+  console.log(verifing, gettingMessage, verifyingwallet);
 
   useEffect(() => {
     if (publicKey) {
@@ -69,11 +75,13 @@ export default function DashBoardLayout(props: Props) {
     publicKey?.toBase58().slice(0, 4) + ".." + publicKey?.toBase58().slice(-4);
 
   const handleVerifyWallet = () => {
-    setVerifing(true);
-    const message = new TextEncoder().encode(
-      "Kindly sign this message, it cost no money!!!, just to verify ownership of this wallet!"
-    );
-    sign!(message).then(() => setVerifing(false));
+    const messageText = new TextEncoder().encode(message.msg);
+    sign!(messageText).then((res) => {
+      verifyWallet({
+        messageSignature: bs58.encode(res),
+        senderPublicKey: publicKey?.toBase58() as string,
+      });
+    });
   };
 
   return (
@@ -116,7 +124,7 @@ export default function DashBoardLayout(props: Props) {
         {publicKey && <footer>{mobilenav}</footer>}
       </Container>
 
-      {/* {wallet && (
+      {wallet && (
         <Modal onClose={closeModal} open={true} showClose={false}>
           <div className="flex flex-col justify-center px-[80px] py-[30px] mobile:px-[5px]">
             <h1 className="text-[24px] font-[500] text-[#140D04] text-center">
@@ -141,7 +149,6 @@ export default function DashBoardLayout(props: Props) {
               <button
                 onClick={() => {
                   disconnect();
-                  setVerifing(false);
                 }}
                 className=" w-full  text-[16px] text-[#FE991E] font-medium border border-[#FE991E] py-[10px] rounded-[100px]"
               >
@@ -151,12 +158,16 @@ export default function DashBoardLayout(props: Props) {
                 onClick={handleVerifyWallet}
                 className=" w-full flex justify-center text-[#000] text-[16px] bg-[#FE991E] font-medium border border-[#FE991E]  py-[10px] rounded-[100px]"
               >
-                {verifing ? <Loader size="25" color="#000" /> : "Verify Wallet"}
+                {Boolean(gettingMessage || verifyingwallet) ? (
+                  <Loader size="25" color="#000" />
+                ) : (
+                  "Verify Wallet"
+                )}
               </button>
             </div>
           </div>
         </Modal>
-      )} */}
+      )}
     </>
   );
 }
