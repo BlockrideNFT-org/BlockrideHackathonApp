@@ -55,6 +55,7 @@ const GlobalStyles = css`
       "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
       "Droid Sans", "Helvetica Neue", sans-serif;
     color: #323947;
+    background: #fff;
   }
 
   button {
