@@ -113,7 +113,7 @@ export default function DashBoardLayout(props: Props) {
             <Outlet />
           </main>
         </section>
-        <footer>{mobilenav}</footer>
+        {publicKey && <footer>{mobilenav}</footer>}
       </Container>
 
       {/* {wallet && (
