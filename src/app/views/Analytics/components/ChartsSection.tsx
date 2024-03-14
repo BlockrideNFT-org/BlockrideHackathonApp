@@ -56,7 +56,7 @@ export default function ChartsSection() {
   return (
     <Container>
       <div className="header">
-        <p className="text-[20px] font-[500]">Charts</p>
+        <p className="text-[20px] font-[500] mobile:mb-[10px]">Charts</p>
         <Tabs tabs={["24H", "7D", "1M", "3M", "6M", "1Y", "All"]} />
       </div>
       <div className="changes">
@@ -195,18 +195,18 @@ const Container = styled.div`
   ${tw`mt-[32px]`}
 
   .header {
-    ${tw`flex items-center gap-[38px]`}
+    ${tw`flex items-center gap-[38px] mobile:block`}
   }
 
   .changes {
-    ${tw`flex justify-between border border-[#EBEDF0] p-[16px] rounded-[8px] mt-[24px]`}
+    ${tw`flex justify-between border border-[#EBEDF0] p-[16px] rounded-[8px] mt-[24px] mobile:grid mobile:grid-rows-2 mobile:grid-cols-2 mobile:gap-[18px] mobile:place-items-stretch`}
   }
 
   .charts {
-    ${tw`mt-[24px] flex gap-[20px]`}
+    ${tw`mt-[24px] flex gap-[20px] mobile:block`}
 
     .chartContainer {
-      ${tw`border border-[#EBEDF0] p-[16px] rounded-[8px] w-[50%]`}
+      ${tw`border border-[#EBEDF0] p-[16px] rounded-[8px] w-[50%] mobile:w-full mobile:mb-[20px]`}
     }
   }
 `;

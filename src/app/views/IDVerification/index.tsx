@@ -1,18 +1,24 @@
-import tw, { styled } from "twin.macro";
-import { ReactComponent as Caution } from "app/assets/icons/caution.svg";
-import Coin from "app/assets/images/coin.png";
+import React from "react";
 
-export default function IdentificationVerification() {
+import { ReactComponent as Caution } from "app/assets/icons/caution.svg";
+import { ReactComponent as ArrowLeft } from "app/assets/icons/arrow-left.svg";
+import Coin from "app/assets/images/coin.png";
+import tw, { styled } from "twin.macro";
+import { Link } from "react-router-dom";
+
+export default function IDVerification() {
   return (
     <Container>
       <div>
-        <p className="text-[24px] font-medium text-[#1E1E1E]">
+        <p className="text-[24px] font-medium text-[#1E1E1E] flex gap-[20px] items-center">
+          <Link to="/profile">
+            <ArrowLeft />
+          </Link>{" "}
           Identity Verification
         </p>
         <p className="text-[16px] font-normal text-[#959595] leading-[24px] mt-[7px]">
-          To start investing on the platform you need to collect <br /> proofs.
-          By collecting more proofs your investing
-          <br /> power increases.
+          To start investing on the platform you need to collect proofs. By
+          collecting more proofs your investing power increases.
         </p>
       </div>
 
@@ -122,5 +128,5 @@ export default function IdentificationVerification() {
 }
 
 const Container = styled.div`
-  ${tw`bg-[#F9FAFB99] px-[40px] pt-[40px] pb-[81px] tablet:hidden`}
+  ${tw`bg-[#F9FAFB99] pb-[81px]`}
 `;

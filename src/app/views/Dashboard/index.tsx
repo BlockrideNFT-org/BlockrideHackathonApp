@@ -7,8 +7,8 @@ import { ReactComponent as SearchIcon } from "app/assets/icons/search.svg";
 import { ReactComponent as Logo } from "app/assets/icons/blockride-logo.svg";
 import { ReactComponent as Coin } from "app/assets/icons/coin.svg";
 import ListBox from "app/components/ListBox";
-import Table from "app/components/Table";
 import { useNavigate } from "react-router-dom";
+import InvestmentsTable from "./components/Table";
 
 export default function DashBoard() {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function DashBoard() {
 
         <button
           onClick={() => navigate("/marketplace")}
-          className=" text-[16px] text-[#111111] font-medium border border-[#FE991E] px-[32px] py-[12px] rounded-[100px] bg-[#FE991E]"
+          className=" mobile:px-[12px] mobile:text-[12px] text-[16px] text-[#111111] font-medium border border-[#FE991E] px-[32px] py-[12px] rounded-[100px] bg-[#FE991E]"
         >
           Purchase fleet
         </button>
@@ -87,7 +87,7 @@ export default function DashBoard() {
       <TopInvestments>
         <div className="header">
           <p>Top Investments</p>
-          <div className="flex gap-[20px] items-center w-[440px]">
+          <div className="flex gap-[20px] items-center w-[440px] mobile:w-full mobile:mt-[10px]">
             <div className="search">
               <SearchIcon />
               <input
@@ -100,36 +100,14 @@ export default function DashBoard() {
           </div>
         </div>
 
-        <Table
-          headings={[
-            {
-              content: "Contract",
-            },
-            {
-              content: "Capital Invested",
-            },
-            {
-              content: "Date Invested",
-            },
-            {
-              content: "Maturity Date",
-            },
-            {
-              content: "APY",
-            },
-            {
-              content: "Accumulated ROI",
-            },
-            {
-              content: "Interest Available",
-            },
-            {
-              content: "",
-            },
-          ]}
-        >
-          <Table.Row className="cursor-pointer w-full">
-            <Table.Cell className="flex gap-[10px] items-center ml-[11px] mt-[20px]">
+        <div className="hidden mobile:block">
+          <div className="text-[#848890] text-[14px] bg-[#F8F8F8] px-[10px] py-[10px] flex justify-between">
+            <p className="text-[#848890]">Contract</p>
+            <p>Capital Invested</p>
+          </div>
+
+          <div className="flex">
+            <div className="flex gap-[10px] items-center ml-[11px] mt-[20px] w-[66%]">
               <Logo />
               <div className="flex flex-col gap-[5px]">
                 <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
@@ -139,139 +117,39 @@ export default function DashBoard() {
                   1000 Tokens
                 </p>
               </div>
-            </Table.Cell>
-
-            <Table.Cell>
-              <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                <Coin />
-                <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                  1500
-                </p>
-              </div>
-            </Table.Cell>
-
-            <Table.Cell>
-              <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                13/01/2024
+            </div>
+            <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
+              <Coin />
+              <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                1500
               </p>
-            </Table.Cell>
+            </div>
+          </div>
+        </div>
 
-            <Table.Cell>
-              <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                13/01/2024
-              </p>
-            </Table.Cell>
-            <Table.Cell>
-              <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                15%
-              </p>
-            </Table.Cell>
-            <Table.Cell>
-              <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                <Coin />
-                <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                  1500
-                </p>
-              </div>
-            </Table.Cell>
-            <Table.Cell>
-              <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                <Coin />
-                <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                  1500
-                </p>
-              </div>
-            </Table.Cell>
-            <Table.Cell>
-              <button className=" mt-[15px] text-[14px] text-[#FE991E] font-[400] border border-[#FE991E] px-[20px] py-[10px] rounded-[100px]">
-                Collect
-              </button>
-            </Table.Cell>
-          </Table.Row>
-
-          <Table.Row className="cursor-pointer w-full">
-            <Table.Cell className="flex gap-[10px] items-center ml-[11px] mt-[20px]">
-              <Logo />
-              <div className="flex flex-col gap-[5px]">
-                <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
-                  Shuttlers HP
-                </p>
-                <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                  1000 Tokens
-                </p>
-              </div>
-            </Table.Cell>
-
-            <Table.Cell>
-              <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                <Coin />
-                <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                  1500
-                </p>
-              </div>
-            </Table.Cell>
-
-            <Table.Cell>
-              <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                13/01/2024
-              </p>
-            </Table.Cell>
-
-            <Table.Cell>
-              <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                13/01/2024
-              </p>
-            </Table.Cell>
-            <Table.Cell className="w-[10%]">
-              <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                15%
-              </p>
-            </Table.Cell>
-            <Table.Cell className="w-[15%]">
-              <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                <Coin />
-                <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                  1500
-                </p>
-              </div>
-            </Table.Cell>
-            <Table.Cell className="w-[15%]">
-              <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                <Coin />
-                <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                  1500
-                </p>
-              </div>
-            </Table.Cell>
-
-            <Table.Cell>
-              <button className=" mt-[15px] text-[14px] text-[#FE991E] font-[400] border border-[#FE991E] px-[20px] py-[10px] rounded-[100px]">
-                Collect
-              </button>
-            </Table.Cell>
-          </Table.Row>
-        </Table>
+        <InvestmentsTable />
       </TopInvestments>
     </Container>
   );
 }
 
 const Container = styled.div`
+  margin-bottom: 30px;
   > .cards {
-    ${tw`flex mt-[32px] gap-[20px]`}
+    ${tw`flex mt-[32px] gap-[20px] flex-wrap `}
 
     .card {
       svg {
         ${tw`shrink-0`}
       }
-      ${tw`flex items-center p-[12px] border border-[#EBEDF0] rounded-[8px] gap-[10px] flex-grow basis-0`}
+      ${tw`flex items-center p-[12px] border border-[#EBEDF0] rounded-[8px] gap-[10px] flex-grow basis-0 `}
 
       >div {
         ${tw`w-full`}
       }
 
       > div > p {
-        ${tw`text-[16px] leading-[24px] mb-[15px]`}
+        ${tw`text-[16px] leading-[24px] mb-[15px] tablet:text-[14px]`}
       }
 
       > div > div {
@@ -294,10 +172,10 @@ const Container = styled.div`
 `;
 
 const TopInvestments = styled.div`
-  ${tw`p-[12px] border border-[#EBEDF0] rounded-[8px] mt-[32px]`}
+  ${tw`p-[12px] border border-[#EBEDF0] rounded-[8px] mt-[32px] w-full`}
 
   .header {
-    ${tw`flex justify-between mb-[20px] items-center`}
+    ${tw`flex justify-between mb-[20px] items-center mobile:(flex-col items-start)`}
     > p {
       ${tw`text-[20px] font-[500] leading-[30px]`}
     }

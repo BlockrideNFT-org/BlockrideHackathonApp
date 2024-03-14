@@ -8,7 +8,7 @@ import { ReactComponent as ContactIcon } from "app/assets/icons/phone.svg";
 const appLinks = [
   {
     label: "Dashboard",
-    url: "/",
+    url: "/dashboard",
     icon: DashboardIcon,
   },
   {

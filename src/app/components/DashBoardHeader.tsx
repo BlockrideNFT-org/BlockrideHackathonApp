@@ -20,9 +20,10 @@ export default function DashboardHeader() {
           backgroundColor: !publicKey ? "#FE991E" : "#FE991E4D",
           borderRadius: "100px",
           color: !publicKey ? "#111111" : "#fff",
-          marginTop: "10px",
           fontSize: "16px",
           fontWeight: "600",
+          zIndex: "999",
+          position: "relative",
         }}
       >
         {!publicKey && "Connect Wallet"}

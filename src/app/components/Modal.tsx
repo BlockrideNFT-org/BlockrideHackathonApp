@@ -36,7 +36,7 @@ export default function Modal(props: PropsWithChildren<Props>) {
 
   return (
     // @ts-ignore
-    <Transition show={open} as={Fragment}>
+    <Transition show={open} as={Fragment} appear>
       <Dialog
         onClose={showClose ? () => onClose() : () => console.log("cant close")}
         as={DialogEl}
@@ -131,7 +131,7 @@ const DialogEl = styled.div`
   ${tw`relative z-50`};
 `;
 
-const Backdrop = tw.div`fixed inset-0 bg-black/30 dark:bg-[rgba(50, 53, 61, 0.3)]`;
+const Backdrop = tw.div`fixed inset-0 bg-black/30`;
 
 const Container = styled.div`
   ${tw`fixed inset-0 flex min-h-full items-center justify-center mobile:block`};
@@ -139,11 +139,11 @@ const Container = styled.div`
 Container.displayName = "ModalContainer";
 
 const DialogContent = styled.div`
-  ${tw`overflow-hidden  max-h-full max-w-full rounded-[8px] mobile:rounded-b-none bg-[#141414] shadow-[0px 0px 4px rgba(0, 0, 0, 0.1), 0px 8px 40px rgba(0, 0, 0, 0.2)]`};
+  ${tw`overflow-hidden max-h-full max-w-full rounded-[8px] mobile:rounded-b-none bg-[#fff] shadow-[0px 0px 4px rgba(0, 0, 0, 0.1), 0px 8px 40px rgba(0, 0, 0, 0.2)]`};
 
   ${tw`flex flex-col`};
 
-  ${tw`mobile:translate-y-[100vh] mobile:min-h-0`};
+  ${tw`mobile:translate-y-[calc(0vh - env(safe-area-inset-bottom, 0px))] mobile:min-h-0`};
 
   > .header {
     ${tw`py-[16px] pr-[16px] pl-[20px] flex items-center justify-between `};

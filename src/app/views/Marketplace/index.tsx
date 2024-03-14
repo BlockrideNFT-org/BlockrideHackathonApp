@@ -12,7 +12,7 @@ export default function MarketPlace() {
 
       <div className="header">
         <Tabs tabs={["All", "Active", "Closed"]} />
-        <div className="flex gap-[20px] items-center w-[440px]">
+        <div className="flex gap-[20px] justify-between items-center w-[440px] tablet:w-full tablet:mt-[10px] ">
           <div className="search">
             <SearchIcon />
             <input
@@ -24,7 +24,7 @@ export default function MarketPlace() {
           <ListBox />
         </div>
       </div>
-      <div className="flex gap-[20px] mt-[40px]">
+      <div className="flex gap-[20px] mt-[40px] flex-wrap mobile:block fleets">
         <FleetCard />
         <FleetCard />
         <FleetCard />
@@ -35,8 +35,9 @@ export default function MarketPlace() {
 }
 
 const Container = styled.div`
+  margin-bottom: 30px;
   .header {
-    ${tw`flex justify-between mb-[20px] items-center mt-[24px]`}
+    ${tw`flex justify-between mb-[20px] items-center mt-[24px] tablet:block`}
     > p {
       ${tw`text-[20px] font-[500] leading-[30px]`}
     }
@@ -47,6 +48,12 @@ const Container = styled.div`
       .input {
         ${tw`text-[14px] font-[400] leading-[18px] text-[#323947] focus:outline-none w-full`}
       }
+    }
+  }
+
+  > .fleets {
+    > *:not(:last-child) {
+      margin-bottom: 20px;
     }
   }
 `;

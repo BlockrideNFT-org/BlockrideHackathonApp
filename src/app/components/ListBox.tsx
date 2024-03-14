@@ -11,7 +11,7 @@ export default function ListBox() {
   return (
     <div>
       <Listbox value={selected} onChange={setSelected}>
-        <div className="relative mt-1">
+        <div className="relative mt-1 z-1">
           <Listbox.Button className=" flex items-center gap-[8px]  bg-white p-[8.5px]  rounded-[8px] border border-[#EBEDF0]">
             <span className="block truncate text-[14px] font-[500]">
               {selected.name}

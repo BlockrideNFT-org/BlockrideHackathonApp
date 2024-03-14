@@ -12,7 +12,7 @@ export default function Documentation() {
       <div className="mt-[32px]">
         <div>
           <div>
-            <h1 className="text-[40px] font-[600] text-[#140D04]">
+            <h1 className="text-[40px] font-[600] text-[#140D04] tablet:text-[30px]">
               Welcome to Blockride!
             </h1>
             <p className="text-[16px] font-[300] text-[#323947] mt-[10px]">
@@ -76,6 +76,6 @@ const Container = styled.div`
     mb-[50px]
 `}
   > div {
-    ${tw`flex justify-between gap-[49px]`}
+    ${tw`flex justify-between gap-[49px] tablet:flex-col`}
   }
 `;

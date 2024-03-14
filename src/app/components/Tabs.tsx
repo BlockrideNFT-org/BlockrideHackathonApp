@@ -15,7 +15,7 @@ export default function Tabs(props: Props) {
   const { tabs } = props;
 
   return (
-    <div className="w-full max-w-[403px] ">
+    <div className="w-full max-w-[403px] tablet:max-w-full ">
       <Tab.Group>
         <Tab.List className="flex justify-evenly bg-[#f3f4f7]  py-[5px] px-[5px] rounded-[8px] ">
           {tabs.map((t) => (

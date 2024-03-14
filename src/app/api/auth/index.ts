@@ -6,11 +6,19 @@ type registerData = {
   username: string;
 };
 
-export const verifyWallet = (signature: string, pubkey: string) => {
-  return request.get(`/verify`, {
+type verifyWallet = {
+  messageSignature: string;
+  senderPublicKey: string;
+};
+
+export const getMessage = () => {
+  return request.get("/auth/message");
+};
+
+export const verifyWallet = (data: verifyWallet) => {
+  return request.post(`/auth/message`, {
     params: {
-      signature,
-      pubkey,
+      ...data,
     },
   });
 };

@@ -49,10 +49,10 @@ export default function FleetDetails() {
 const Container = styled.div`
   ${tw`mb-[30px]`}
   .description {
-    ${tw`flex gap-[50px]`}
+    ${tw`flex gap-[50px] mobile:flex-col`}
   }
   .progress {
-    ${tw`w-[160px] h-[160px]`}
+    ${tw`w-[160px] h-[160px] mobile:self-center`}
 
     >div {
       ${tw`relative`}

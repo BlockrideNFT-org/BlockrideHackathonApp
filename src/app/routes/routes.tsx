@@ -10,6 +10,8 @@ import FleetDetails from "app/views/FleetDetails";
 import Profile from "app/views/Profile";
 import Documentation from "app/views/Documentation";
 import ContactUs from "app/views/ContactUs";
+import DashBoardMobileNav from "app/components/DashBoardMobileNav";
+import IDVerification from "app/views/IDVerification";
 
 const routesObject: RouteObject[] = [
   {
@@ -17,11 +19,15 @@ const routesObject: RouteObject[] = [
       <DashBoardLayout
         header={<DashboardHeader />}
         sidenav={<DashboardSideNav />}
+        mobilenav={<DashBoardMobileNav />}
       />
     ),
     children: [
       {
         path: "/",
+      },
+      {
+        path: "/dashboard",
         element: <DashBoard />,
       },
       {
@@ -47,6 +53,10 @@ const routesObject: RouteObject[] = [
       {
         path: "/contact-us",
         element: <ContactUs />,
+      },
+      {
+        path: "/id-verification",
+        element: <IDVerification />,
       },
     ],
   },

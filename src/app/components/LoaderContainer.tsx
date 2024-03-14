@@ -56,13 +56,9 @@ const Container = styled.div`
     ${tw`h-screen mobile:px-0`};
   }
 
-  
-    ${tw`xl:h-full`};
+  ${tw`xl:h-full`};
 
-    max-height: 100%;
+  max-height: 100%;
 
-    ${tw`mobile:px-0`};
-
-   
-  }
+  ${tw`mobile:px-0`};
 `;

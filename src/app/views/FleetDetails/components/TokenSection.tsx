@@ -30,7 +30,7 @@ const chartOptions = {
 export default function TokenSection() {
   return (
     <Container>
-      <div className="flex gap-[20px] mt-[40px]">
+      <div className="flex gap-[20px] mt-[40px] flex-wrap mobile:block">
         <div className="chartContainer">
           <p className="text-[16px] font-[500] text-[#353649] bg-[#F2F4F7] px-[8px] py-[5px] w-fit rounded-[4px]">
             TVL$
@@ -91,7 +91,7 @@ export default function TokenSection() {
             id="amount"
             className=" px-[10px] outline-none text-[16px] font-medium bg-transparent"
           />
-          <button className="w-[30%] text-[16px] text-[#111111] font-medium border border-[#FE991E] px-[20px] py-[10px] rounded-[100px] bg-[#FE991E]">
+          <button className=" tablet:px-[10px] mobile:w-full w-[30%] text-[16px] text-[#111111] font-medium border border-[#FE991E] px-[20px] py-[10px] rounded-[100px] bg-[#FE991E]">
             Purchase Now
           </button>
         </div>
@@ -103,7 +103,7 @@ export default function TokenSection() {
 const Container = styled.div`
   .chartContainer {
     ${tw`border border-[
-#D0D5DD] p-[16px] rounded-[8px] w-[50%] basis-[60%]`}
+#D0D5DD] p-[16px] rounded-[8px] w-[50%] basis-[60%] mobile:w-full mobile:mb-[20px]`}
   }
 
   .investment {

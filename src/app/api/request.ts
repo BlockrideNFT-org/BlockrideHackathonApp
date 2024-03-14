@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 export default Axios.create({
-  baseURL: "https://blockride-backend.vercel.app",
+  baseURL: "https://blockride-investors-backend.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },

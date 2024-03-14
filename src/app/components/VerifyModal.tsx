@@ -34,25 +34,25 @@ export default function VerifyModal(props: Props) {
       .then((res) => {
         localStorage.setItem("sign", JSON.stringify(bs58.encode(res)));
         setSignature(bs58.encode(res));
-        verifyWallet(bs58.encode(res), publicKey?.toBase58() as string).then(
-          () => {
-            confirmUser(publicKey?.toBase58() as string)
-              .then((res) => {
-                closeModal();
-                setVerifing(false);
-                localStorage.setItem("verified", "true");
-              })
-              .catch((res) => {
-                if (res.response.data.error === "User does not exist") {
-                  setVerify(true);
-                  setVerifing(false);
-                  localStorage.setItem("verified", "true");
-                } else {
-                  return res;
-                }
-              });
-          }
-        );
+        // verifWallet(bs58.encode(res), publicKey?.toBase58() as string).then(
+        //   () => {
+        //     confirmUser(publicKey?.toBase58() as string)
+        //       .then((res) => {
+        //         closeModal();
+        //         setVerifing(false);
+        //         localStorage.setItem("verified", "true");
+        //       })
+        //       .catch((res) => {
+        //         if (res.response.data.error === "User does not exist") {
+        //           setVerify(true);
+        //           setVerifing(false);
+        //           localStorage.setItem("verified", "true");
+        //         } else {
+        //           return res;
+        //         }
+        //       });
+        //   }
+        // );
       })
       .catch((res) => console.log(res));
   };

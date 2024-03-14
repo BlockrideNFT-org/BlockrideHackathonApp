@@ -109,7 +109,7 @@ export default function Analytics() {
       <TopInvestments>
         <div className="header">
           <p>Top Fleets</p>
-          <div className="flex gap-[20px] items-center w-[440px]">
+          <div className="flex gap-[20px] items-center w-[440px] mobile:w-full mobile:mt-[10px]">
             <div className="search">
               <SearchIcon />
               <input
@@ -122,7 +122,35 @@ export default function Analytics() {
           </div>
         </div>
 
+        <div className="hidden mobile:block">
+          <div className="text-[#848890] text-[14px] bg-[#F8F8F8] px-[10px] py-[10px] flex justify-between">
+            <p className="text-[#848890]">Contract</p>
+            <p>Capital Invested</p>
+          </div>
+
+          <div className="flex">
+            <div className="flex gap-[10px] items-center ml-[11px] mt-[20px] w-[66%]">
+              <Logo />
+              <div className="flex flex-col gap-[5px]">
+                <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
+                  Shuttlers HP
+                </p>
+                <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                  1000 Tokens
+                </p>
+              </div>
+            </div>
+            <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
+              <Coin />
+              <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                1500
+              </p>
+            </div>
+          </div>
+        </div>
+
         <Table
+          className="mobile:hidden"
           headings={[
             {
               content: "Contract",
@@ -282,7 +310,7 @@ export default function Analytics() {
 
 const Container = styled.div`
   > .cards {
-    ${tw`flex mt-[32px] gap-[20px]`}
+    ${tw`flex mt-[32px] gap-[20px] flex-wrap`}
 
     .card {
       svg {
@@ -295,7 +323,7 @@ const Container = styled.div`
       }
 
       > div > p {
-        ${tw`text-[16px] leading-[24px] mb-[15px]`}
+        ${tw`text-[16px] leading-[24px] mb-[15px] tablet:text-[14px]`}
       }
 
       > div > div {
@@ -321,7 +349,7 @@ const TopInvestments = styled.div`
   ${tw`p-[12px] border border-[#EBEDF0] rounded-[8px] mt-[32px]`}
 
   .header {
-    ${tw`flex justify-between mb-[20px] items-center`}
+    ${tw`flex justify-between mb-[20px] items-center mobile:(flex-col items-start)`}
     > p {
       ${tw`text-[20px] font-[500] leading-[30px]`}
     }

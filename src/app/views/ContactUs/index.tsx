@@ -10,8 +10,8 @@ export default function ContactUs() {
         Contact Us
       </p>
 
-      <div className="flex flex-col p-[24px] bg-[#F9FAFB99] w-[635px]">
-        <h1 className="text-[40px] font-[600]">
+      <div className="flex flex-col p-[24px] bg-[#F9FAFB99] w-[635px] tablet:w-full mobile:p-0">
+        <h1 className="text-[40px] font-[600] mobile:text-[30px]">
           We would like to hear from you!
         </h1>
         <p className="text-[16px] font-[300] text-[#323947]">
