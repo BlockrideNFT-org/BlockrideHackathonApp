@@ -5,7 +5,6 @@ import Modal from "./Modal";
 
 import { confirmUser, verifyWallet } from "app/api/auth/index";
 import { useState } from "react";
-import SignUpForm from "./SignUpForm";
 
 interface Props {
   open: boolean;
@@ -60,7 +59,7 @@ export default function VerifyModal(props: Props) {
   return (
     <Modal open={open} onClose={closeModal} showClose={false} tw="max-h-full">
       {verify ? (
-        <SignUpForm signature={signature} closeModal={closeModal} />
+        <></>
       ) : (
         <ModalContent>
           <div>

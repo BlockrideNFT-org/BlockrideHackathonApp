@@ -9,127 +9,141 @@ import { ReactComponent as Coin } from "app/assets/icons/coin.svg";
 import ListBox from "app/components/ListBox";
 import { useNavigate } from "react-router-dom";
 import InvestmentsTable from "./components/Table";
+import useGetUser from "app/hooks/useGetUserWithoutEnable";
+import LoaderContainer from "app/components/LoaderContainer";
+import NetworkLoader from "app/components/NetworkLoader";
 
 export default function DashBoard() {
   const navigate = useNavigate();
 
+  const { data: user, isLoading: gettingUser, isFetching } = useGetUser();
+
+  const capitalizeStr =
+    (user?.username.charAt(0).toUpperCase() as string) +
+    user?.username.slice(1);
+
   return (
-    <Container>
-      <div className="flex justify-between items-center">
-        <div>
-          <p className="text-[18px] font-normal mb-[8px] leading-[24px]">
-            Hello, <span className="font-[500]">Emmanuel</span>
-          </p>
-          <p className="text-[18px] font-[300] leading-[24px]">
-            Start an investment today!
-          </p>
-        </div>
-
-        <button
-          onClick={() => navigate("/marketplace")}
-          className=" mobile:px-[12px] mobile:text-[12px] text-[16px] text-[#111111] font-medium border border-[#FE991E] px-[32px] py-[12px] rounded-[100px] bg-[#FE991E]"
-        >
-          Purchase fleet
-        </button>
-      </div>
-
-      <div className="cards">
-        <div className="card">
-          <InvestmentIcon />
-          <div>
-            <p>Total Amount Invested</p>
+    <>
+      {isFetching && <NetworkLoader />}
+      <LoaderContainer loading={gettingUser} page>
+        <Container>
+          <div className="flex justify-between items-center">
             <div>
-              <p>$0</p>
-              <div>
-                <ArrowUp />0
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="card">
-          <FleetIcon />
-          <div>
-            <p>Total No. of Vehicles</p>
-            <div>
-              <p>0</p>
-              <div>
-                <ArrowUp />0
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="card">
-          <InvestmentIcon />
-          <div>
-            <p>Total ROI</p>
-            <div>
-              <p>$0</p>
-              <div>
-                <ArrowUp />0
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="card">
-          <OngoingIcon />
-          <div>
-            <p>Ongoing Investment</p>
-            <div>
-              <p>$0</p>
-              <div>
-                <ArrowUp />0
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <TopInvestments>
-        <div className="header">
-          <p>Top Investments</p>
-          <div className="flex gap-[20px] items-center w-[440px] mobile:w-full mobile:mt-[10px]">
-            <div className="search">
-              <SearchIcon />
-              <input
-                type="text"
-                className="input"
-                placeholder="Enter name, date..."
-              />
-            </div>
-            <ListBox />
-          </div>
-        </div>
-
-        <div className="hidden mobile:block">
-          <div className="text-[#848890] text-[14px] bg-[#F8F8F8] px-[10px] py-[10px] flex justify-between">
-            <p className="text-[#848890]">Contract</p>
-            <p>Capital Invested</p>
-          </div>
-
-          <div className="flex">
-            <div className="flex gap-[10px] items-center ml-[11px] mt-[20px] w-[66%]">
-              <Logo />
-              <div className="flex flex-col gap-[5px]">
-                <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
-                  Shuttlers HP
-                </p>
-                <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                  1000 Tokens
-                </p>
-              </div>
-            </div>
-            <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-              <Coin />
-              <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                1500
+              <p className="text-[18px] font-normal mb-[8px] leading-[24px]">
+                Hello, <span className="font-[500]">{capitalizeStr}</span>
+              </p>
+              <p className="text-[18px] font-[300] leading-[24px]">
+                Start an investment today!
               </p>
             </div>
-          </div>
-        </div>
 
-        <InvestmentsTable />
-      </TopInvestments>
-    </Container>
+            <button
+              onClick={() => navigate("/marketplace")}
+              className=" mobile:px-[12px] mobile:text-[12px] text-[16px] text-[#111111] font-medium border border-[#FE991E] px-[32px] py-[12px] rounded-[100px] bg-[#FE991E]"
+            >
+              Purchase fleet
+            </button>
+          </div>
+
+          <div className="cards">
+            <div className="card">
+              <InvestmentIcon />
+              <div>
+                <p>Total Amount Invested</p>
+                <div>
+                  <p>$0</p>
+                  <div>
+                    <ArrowUp />0
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="card">
+              <FleetIcon />
+              <div>
+                <p>Total No. of Vehicles</p>
+                <div>
+                  <p>0</p>
+                  <div>
+                    <ArrowUp />0
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="card">
+              <InvestmentIcon />
+              <div>
+                <p>Total ROI</p>
+                <div>
+                  <p>$0</p>
+                  <div>
+                    <ArrowUp />0
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="card">
+              <OngoingIcon />
+              <div>
+                <p>Ongoing Investment</p>
+                <div>
+                  <p>$0</p>
+                  <div>
+                    <ArrowUp />0
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <TopInvestments>
+            <div className="header">
+              <p>Top Investments</p>
+              <div className="flex gap-[20px] items-center w-[440px] mobile:w-full mobile:mt-[10px]">
+                <div className="search">
+                  <SearchIcon />
+                  <input
+                    type="text"
+                    className="input"
+                    placeholder="Enter name, date..."
+                  />
+                </div>
+                <ListBox />
+              </div>
+            </div>
+
+            <div className="hidden mobile:block">
+              <div className="text-[#848890] text-[14px] bg-[#F8F8F8] px-[10px] py-[10px] flex justify-between">
+                <p className="text-[#848890]">Contract</p>
+                <p>Capital Invested</p>
+              </div>
+
+              <div className="flex">
+                <div className="flex gap-[10px] items-center ml-[11px] mt-[20px] w-[66%]">
+                  <Logo />
+                  <div className="flex flex-col gap-[5px]">
+                    <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
+                      Shuttlers HP
+                    </p>
+                    <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                      1000 Tokens
+                    </p>
+                  </div>
+                </div>
+                <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
+                  <Coin />
+                  <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                    1500
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <InvestmentsTable />
+          </TopInvestments>
+        </Container>
+      </LoaderContainer>
+    </>
   );
 }
 

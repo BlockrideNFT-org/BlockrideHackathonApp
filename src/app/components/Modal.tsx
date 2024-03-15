@@ -131,7 +131,7 @@ const DialogEl = styled.div`
   ${tw`relative z-50`};
 `;
 
-const Backdrop = tw.div`fixed inset-0 bg-black/30`;
+const Backdrop = tw.div`fixed inset-0 bg-black/30 backdrop-blur-[1.0140844583511353px]`;
 
 const Container = styled.div`
   ${tw`fixed inset-0 flex min-h-full items-center justify-center mobile:block`};

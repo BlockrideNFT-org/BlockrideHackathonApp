@@ -1,6 +1,10 @@
 import * as React from "react";
 import Axios from "axios";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export const queryClient = new QueryClient({
@@ -21,6 +25,9 @@ export const queryClient = new QueryClient({
       },
     },
   },
+  queryCache: new QueryCache({
+    onSuccess: () => console.log("success"),
+  }),
 });
 
 export default function QueryProvider(props: React.PropsWithChildren<{}>) {
