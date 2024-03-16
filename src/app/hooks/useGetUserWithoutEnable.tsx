@@ -8,8 +8,8 @@ export default function useGetUserWithoutEnable() {
 
   const { isLoading, data, isFetching } = useQuery({
     queryKey: ["user-without-enable"],
-    queryFn: () => getUser(publicKey?.toBase58() as string),
-    enabled: !!publicKey,
+    queryFn: () => getUser(storage.get("key")),
+    enabled: !!storage.get("key"),
   });
 
   return {
