@@ -71,7 +71,9 @@ export default function DashBoardLayout(props: Props) {
     storage.get("key"),
     connecting === false,
     publicKey === null,
-    Boolean(connecting === true && publicKey)
+    Boolean(connecting === true && publicKey),
+    storage.get("key"),
+    publicKey?.toBase58() as string
   );
 
   const contentRef = useRef<HTMLDivElement>(null);
@@ -95,6 +97,11 @@ export default function DashBoardLayout(props: Props) {
         setStep("");
       } else {
         setStep("verify");
+      }
+
+      if (storage.get("key") !== publicKey?.toBase58()) {
+        storage.remove("key");
+        storage.remove("signature");
       }
     } else if (Boolean(connecting === false && publicKey === null)) {
       setStep("connect");
