@@ -45,7 +45,14 @@ export default function DashBoardLayout(props: Props) {
 
   const { closeModal } = useModalState();
 
-  const { publicKey, disconnect, signMessage: sign } = useWallet();
+  const {
+    publicKey,
+    disconnect,
+    signMessage: sign,
+    connecting,
+    disconnecting,
+    connected,
+  } = useWallet();
 
   const { data: message, isLoading: gettingMessage } = useGetSignMessage();
 
@@ -57,14 +64,22 @@ export default function DashBoardLayout(props: Props) {
     data: verificationMessage,
   } = useVerifyWallet();
 
-  console.log(user, verificationMessage, publicKey);
+  console.log(
+    user,
+    verificationMessage,
+    publicKey,
+    storage.get("key"),
+    connecting === false,
+    publicKey === null,
+    Boolean(connecting === true && publicKey)
+  );
 
   const contentRef = useRef<HTMLDivElement>(null);
 
   const location = useLocation();
 
   useEffect(() => {
-    if (!!storage.get("key")) {
+    if (Boolean(!!storage.get("key") && connecting === false && publicKey)) {
       navigate("/dashboard");
       setStep("");
     } else {
@@ -73,15 +88,30 @@ export default function DashBoardLayout(props: Props) {
       setGetUser(false);
     }
 
-    if (publicKey) {
-      setStep("verify");
-      // storage.set("key", publicKey.toBase58() as string);
-    } else {
-      storage.remove("key");
-      storage.remove("signature");
+    if (Boolean(connecting === true && publicKey === null)) {
+      console.log("connecting");
+    } else if (Boolean(connecting === false && publicKey)) {
+      if (!!storage.get("key")) {
+        setStep("");
+      } else {
+        setStep("verify");
+      }
+    } else if (Boolean(connecting === false && publicKey === null)) {
       setStep("connect");
+      // console.log("disconnected");
+    } else {
+      return;
     }
-  }, [publicKey, storage.get("key")]);
+
+    // if (publicKey) {
+    //   setStep("verify");
+    //   // storage.set("key", publicKey.toBase58() as string);
+    // } else {
+    //   storage.remove("key");
+    //   storage.remove("signature");
+    //   setStep("connect");
+    // }
+  }, [connecting, publicKey, storage.get("key"), connected]);
 
   useUpdatedEffect(() => {
     if (contentRef.current) {
@@ -101,8 +131,9 @@ export default function DashBoardLayout(props: Props) {
           senderPublicKey: publicKey?.toBase58() as string,
         },
         {
-          onSuccess: () => {
+          onSuccess: (data) => {
             setGetUser(true);
+            storage.set("signature", data.data.messageSignature);
           },
           onError: () => {
             setGetUser(false);
@@ -118,7 +149,7 @@ export default function DashBoardLayout(props: Props) {
         <div className="header">{header}</div>
         <section className="body">
           <aside className="sidebar">{sidenav}</aside>
-          {Boolean(!storage.get("key") && step === "connect") && (
+          {step === "connect" && (
             <div className="overlay">
               <div className="h-[90vh] flex justify-center items-center">
                 <div className="flex justify-center flex-col items-center w-[1000px] gap-[10px]">
