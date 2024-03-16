@@ -18,7 +18,7 @@ export default function useGetUser(
         }
 
         setStep("");
-        storage.set("key", "testing");
+        storage.set("key", publicKey?.toBase58() as string);
       }),
     enabled: enable,
   });

@@ -102,15 +102,6 @@ export default function DashBoardLayout(props: Props) {
     } else {
       return;
     }
-
-    // if (publicKey) {
-    //   setStep("verify");
-    //   // storage.set("key", publicKey.toBase58() as string);
-    // } else {
-    //   storage.remove("key");
-    //   storage.remove("signature");
-    //   setStep("connect");
-    // }
   }, [connecting, publicKey, storage.get("key"), connected]);
 
   useUpdatedEffect(() => {
