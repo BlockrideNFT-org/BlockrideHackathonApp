@@ -6,13 +6,25 @@ type registerData = {
   username: string;
 };
 
-export const verifyWallet = (signature: string, pubkey: string) => {
-  return request.get(`/verify`, {
-    params: {
-      signature,
-      pubkey,
-    },
-  });
+type VerifyWallet = {
+  messageSignature: string;
+  senderPublicKey: string;
+};
+
+type User = {
+  _id: string;
+  pubkey: string;
+  username: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export const getMessage = () => {
+  return request.get("/auth/message");
+};
+
+export const verifyWallet = (data: VerifyWallet) => {
+  return request.post(`/auth/message`, data);
 };
 
 export const confirmUser = (pubkey: string) => {
@@ -24,13 +36,16 @@ export const confirmUser = (pubkey: string) => {
 };
 
 export const registerUser = (data: registerData) => {
-  return request.post(`/signup`, data);
+  return request.post(`/auth/signup`, data);
 };
 
-export const getUserProfile = (pubkey: string) => {
-  return request.get("/profile", {
+export const getUser = (pubkey: string) => {
+  return request.get<User>("/auth/getuser", {
     params: {
       pubkey,
     },
+
+    validateStatus: (status) =>
+      (status >= 200 && status < 300) || status === 404,
   });
 };

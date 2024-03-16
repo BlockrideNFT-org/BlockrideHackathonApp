@@ -2,6 +2,13 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    container: {
+      center: true,
+      // padding: "2rem",
+      screens: {
+        "2xl": "1440px",
+      },
+    },
     extend: {
       height: {
         page: "calc(100vh - 64px)",
@@ -14,6 +21,8 @@ module.exports = {
         tablet: { max: "768px" },
         mobile: { max: "480px" },
         smallmobile: { max: "320px" },
+        container: "1440px",
+        "2xl": "1536px",
       },
       fontSize: {
         base: "1.4rem",

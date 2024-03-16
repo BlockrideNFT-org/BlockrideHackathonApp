@@ -7,7 +7,7 @@ import Footer from "./Footer";
 import Menu from "app/components/Menu";
 import useModalState from "app/hooks/useModalState";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+
 import ProfileDropdown from "./ProfileDropdown";
 import { useEffect } from "react";
 import VerifyModal from "./VerifyModal";
@@ -48,11 +48,11 @@ export default function DashBoardLayout() {
             <Menu />
           </div>
           <div className="action">
-            {publicKey ? (
+            {/* {publicKey ? (
               <ProfileDropdown />
             ) : (
               <WalletMultiButton>Connect Wallet</WalletMultiButton>
-            )}
+            )} */}
           </div>
         </div>
       </Header>
