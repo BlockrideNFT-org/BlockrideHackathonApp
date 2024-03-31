@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const encodeString = (str: string) =>
   btoa(
     encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_, p1) =>
@@ -17,3 +19,7 @@ export const decodeString = (str: string) =>
       )
       .join("")
   );
+
+export function formatDateStr(dateStr: string | number, format?: string) {
+  return dayjs(dayjs(dateStr)).format(format || "MMM DD, YYYY");
+}

@@ -2,11 +2,15 @@ import tw, { styled } from "twin.macro";
 
 import { ReactComponent as InvestmentIcon } from "app/assets/icons/investments.svg";
 import { ReactComponent as FleetIcon } from "app/assets/icons/fleets.svg";
+import { ReactComponent as FractionalOwners } from "app/assets/icons/fractional-owners.svg";
+import Partners from "app/assets/icons/partners.png";
+import CarbonOffset from "app/assets/icons/carbon-offset.png";
 import { ReactComponent as OngoingIcon } from "app/assets/icons/ongoing.svg";
 import { ReactComponent as SearchIcon } from "app/assets/icons/search.svg";
 import { ReactComponent as ArrowUp } from "app/assets/icons/arrow-up-outlined.svg";
 import { ReactComponent as Logo } from "app/assets/icons/blockride-logo.svg";
 import { ReactComponent as Coin } from "app/assets/icons/coin.svg";
+import { ReactComponent as RevenueGenerated } from "app/assets/icons/revenue-generated.svg";
 import ListBox from "app/components/ListBox";
 import Table from "app/components/Table";
 import ChartsSection from "./components/ChartsSection";
@@ -22,7 +26,7 @@ export default function Analytics() {
           <div>
             <p>Total Vehicles Financed</p>
             <div>
-              <p>$0</p>
+              <p>0</p>
               <div>
                 <ArrowUp />0
               </div>
@@ -30,7 +34,7 @@ export default function Analytics() {
           </div>
         </div>
         <div className="card">
-          <InvestmentIcon />
+          <FractionalOwners />
           <div>
             <p>Unique Fractional Owners</p>
             <div>
@@ -42,11 +46,11 @@ export default function Analytics() {
           </div>
         </div>
         <div className="card">
-          <OngoingIcon />
+          <img src={Partners} alt="partners" />
           <div>
             <p>Total Partners</p>
             <div>
-              <p>$0</p>
+              <p>0</p>
               <div>
                 <ArrowUp />0
               </div>
@@ -54,11 +58,16 @@ export default function Analytics() {
           </div>
         </div>
         <div className="card">
-          <FleetIcon />
+          <img src={CarbonOffset} alt="carbon-offset" />
           <div>
             <p>Carbon Offset</p>
             <div>
-              <p>$0</p>
+              <p className="flex">
+                0
+                <sub className="text-[14px] leading-[18px] self-center">
+                  (tC02E)
+                </sub>
+              </p>
               <div>
                 <ArrowUp />0
               </div>
@@ -93,7 +102,7 @@ export default function Analytics() {
           </div>
         </div>
         <div className="card">
-          <InvestmentIcon />
+          <RevenueGenerated />
           <div>
             <p>Total Revenue Generated</p>
             <div>

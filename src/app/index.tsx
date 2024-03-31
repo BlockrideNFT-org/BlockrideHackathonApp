@@ -19,6 +19,7 @@ import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import Routes from "./routes";
 import QueryProvider from "./providers/QueryProvider";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import ToastProvider from "./providers/ToastProviders";
 
 function App() {
   const wallets = useMemo(
@@ -34,17 +35,19 @@ function App() {
 
   return (
     <QueryProvider>
-      <ConnectionProvider endpoint={endpoint}>
-        <WalletProvider wallets={wallets} autoConnect>
-          <WalletModalProvider>
-            <HistoryRouter
-              history={history as unknown as HistoryRouterProps["history"]}
-            >
-              <Routes />
-            </HistoryRouter>
-          </WalletModalProvider>
-        </WalletProvider>
-      </ConnectionProvider>
+      <ToastProvider>
+        <ConnectionProvider endpoint={endpoint}>
+          <WalletProvider wallets={wallets} autoConnect>
+            <WalletModalProvider>
+              <HistoryRouter
+                history={history as unknown as HistoryRouterProps["history"]}
+              >
+                <Routes />
+              </HistoryRouter>
+            </WalletModalProvider>
+          </WalletProvider>
+        </ConnectionProvider>
+      </ToastProvider>
     </QueryProvider>
   );
 }

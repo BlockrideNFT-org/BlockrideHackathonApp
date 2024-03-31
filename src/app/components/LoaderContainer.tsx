@@ -35,8 +35,6 @@ export default function LoaderContainer(props: React.PropsWithChildren<Props>) {
     ...rest
   } = props;
 
-  const navigate = useNavigate();
-
   return (
     <Container className={clsx({ page, screen }, className)} {...rest}>
       {loading && (
@@ -46,13 +44,14 @@ export default function LoaderContainer(props: React.PropsWithChildren<Props>) {
       )}
 
       {error && (
-        <div tw="text-[2.4rem] text-center">
-          {`${errorMessage} due to session time out`} <br />{" "}
+        <div className="text-[2.4rem] flex flex-col w-full m-auto justify-center gap-3">
+          <div className="text-center">{errorMessage}</div>
+
           <button
-            tw="text-[1.4rem] text-[#252dc4e8]"
-            onClick={() => navigate("/login")}
+            onClick={onRetry}
+            className="w-fit self-center mobile:px-[12px] mobile:text-[12px] text-[16px] text-[#111111] font-medium border border-[#FE991E] px-[32px] py-[12px] rounded-[100px] bg-[#FE991E]"
           >
-            Return to Login
+            Retry
           </button>
         </div>
       )}

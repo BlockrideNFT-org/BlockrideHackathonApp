@@ -6,29 +6,44 @@ import { ReactComponent as ArrowUp } from "app/assets/icons/arrow-up-outlined.sv
 import { ReactComponent as SearchIcon } from "app/assets/icons/search.svg";
 import { ReactComponent as Logo } from "app/assets/icons/blockride-logo.svg";
 import { ReactComponent as Coin } from "app/assets/icons/coin.svg";
+import { ReactComponent as RevenueGenerated } from "app/assets/icons/revenue-generated.svg";
 import ListBox from "app/components/ListBox";
 import { useNavigate } from "react-router-dom";
 import InvestmentsTable from "./components/Table";
 import useGetUser from "app/hooks/useGetUserWithoutEnable";
 import LoaderContainer from "app/components/LoaderContainer";
 import NetworkLoader from "app/components/NetworkLoader";
+import useGetUserShares from "./hooks/useGetUserShares";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 export default function DashBoard() {
   const navigate = useNavigate();
 
-  const { data: user, isLoading: gettingUser, isFetching } = useGetUser();
+  const { publicKey } = useWallet();
+
+  const {
+    data: user,
+    isLoading: gettingUser,
+    isFetching: isFetchingUsers,
+  } = useGetUser();
+  const {
+    data: shares,
+    isLoading: gettingShares,
+    isFetching: isFetchingShares,
+  } = useGetUserShares(publicKey?.toBase58() as string);
 
   const capitalizeStr =
     user &&
     (user?.username.charAt(0).toUpperCase() as string) +
       user?.username.slice(1);
 
-  console.log(user);
+  const isFetching = isFetchingShares || isFetchingUsers;
+  const isLoading = gettingShares || gettingUser;
 
   return (
     <>
       {isFetching && <NetworkLoader />}
-      <LoaderContainer loading={gettingUser} page>
+      <LoaderContainer loading={isLoading} page>
         {user && (
           <Container>
             <div className="flex justify-between items-center">
@@ -63,19 +78,7 @@ export default function DashBoard() {
                 </div>
               </div>
               <div className="card">
-                <FleetIcon />
-                <div>
-                  <p>Total No. of Vehicles</p>
-                  <div>
-                    <p>0</p>
-                    <div>
-                      <ArrowUp />0
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="card">
-                <InvestmentIcon />
+                <RevenueGenerated />
                 <div>
                   <p>Total ROI</p>
                   <div>
@@ -87,11 +90,24 @@ export default function DashBoard() {
                 </div>
               </div>
               <div className="card">
+                <FleetIcon />
+                <div>
+                  <p>Total No. of Vehicles</p>
+                  <div>
+                    <p>0</p>
+                    <div>
+                      <ArrowUp />0
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card">
                 <OngoingIcon />
                 <div>
                   <p>Ongoing Investment</p>
                   <div>
-                    <p>$0</p>
+                    <p>0</p>
                     <div>
                       <ArrowUp />0
                     </div>
