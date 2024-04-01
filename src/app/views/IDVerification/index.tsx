@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ReactComponent as Caution } from "app/assets/icons/caution.svg";
 import { ReactComponent as ArrowLeft } from "app/assets/icons/arrow-left.svg";
 import Coin from "app/assets/images/coin.png";
 import tw, { styled } from "twin.macro";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import storage from "app/lib/storage";
 
 export default function IDVerification() {
+  const location = useLocation();
+
+  useEffect(() => {
+    storage.set("path", location.pathname);
+  }, []);
   return (
     <Container>
       <div>

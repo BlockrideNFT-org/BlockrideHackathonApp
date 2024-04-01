@@ -8,13 +8,15 @@ import { ReactComponent as Logo } from "app/assets/icons/blockride-logo.svg";
 import { ReactComponent as Coin } from "app/assets/icons/coin.svg";
 import { ReactComponent as RevenueGenerated } from "app/assets/icons/revenue-generated.svg";
 import ListBox from "app/components/ListBox";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import InvestmentsTable from "./components/Table";
 import useGetUser from "app/hooks/useGetUserWithoutEnable";
 import LoaderContainer from "app/components/LoaderContainer";
 import NetworkLoader from "app/components/NetworkLoader";
 import useGetUserShares from "./hooks/useGetUserShares";
 import { useWallet } from "@solana/wallet-adapter-react";
+import storage from "app/lib/storage";
+import { useEffect } from "react";
 
 export default function DashBoard() {
   const navigate = useNavigate();
@@ -39,6 +41,12 @@ export default function DashBoard() {
 
   const isFetching = isFetchingShares || isFetchingUsers;
   const isLoading = gettingShares || gettingUser;
+
+  const location = useLocation();
+
+  useEffect(() => {
+    storage.set("path", location.pathname);
+  }, []);
 
   return (
     <>
@@ -118,7 +126,7 @@ export default function DashBoard() {
 
             <TopInvestments>
               <div className="header">
-                <p>Top Investments</p>
+                <p>My Investments</p>
                 <div className="flex gap-[20px] items-center w-[440px] mobile:w-full mobile:mt-[10px]">
                   <div className="search">
                     <SearchIcon />

@@ -82,7 +82,7 @@ export default function DashBoardLayout(props: Props) {
 
   useEffect(() => {
     if (Boolean(!!storage.get("key") && connecting === false && publicKey)) {
-      navigate("/dashboard");
+      navigate(storage.get("path"));
       setStep("");
     } else {
       navigate("/");

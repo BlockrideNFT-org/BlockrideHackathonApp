@@ -9,7 +9,13 @@ import { ReactComponent as InfoError } from "../assets/icons/info-filled-error.s
 export type ToastVariant = "success" | "error";
 
 interface ToastContextType {
-  showToast: (title: string, subTitle: string, variant: ToastVariant) => void;
+  showToast: (
+    title: string,
+    subTitle: string,
+    variant: ToastVariant,
+    transaction: boolean,
+    link: string
+  ) => void;
 }
 
 export const ToastContext = React.createContext<ToastContextType>({
@@ -21,12 +27,24 @@ export default function ToastProvider(props: React.PropsWithChildren<any>) {
   const showToast = (
     title: string,
     subTitle: string,
-    varaint: ToastVariant
+    varaint: ToastVariant,
+    transaction: boolean,
+    link: string
   ) => {
     const message = (
       <div>
         {title && <p>{title}</p>}
         {subTitle && <p className="text-[14px]">{subTitle}</p>}
+        {transaction && (
+          <a
+            onClick={() =>
+              window.open(`https://explorer.solana.com/tx/${link}`)
+            }
+            className="text-blue-500 text-[14px] mt-[10px] cursor-pointer"
+          >
+            View transaction
+          </a>
+        )}
       </div>
     );
 
@@ -43,7 +61,7 @@ export default function ToastProvider(props: React.PropsWithChildren<any>) {
 
   return (
     <ToastContext.Provider value={{ showToast }}>
-      <ToastContainer hideProgressBar />
+      <ToastContainer hideProgressBar autoClose={10000} />
       {props.children}
     </ToastContext.Provider>
   );

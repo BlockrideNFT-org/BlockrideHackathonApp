@@ -1,8 +1,16 @@
 import styled from "@emotion/styled";
 import App from "app/assets/images/app.png";
+import storage from "app/lib/storage";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import tw from "twin.macro";
 
 export default function Documentation() {
+  const location = useLocation();
+
+  useEffect(() => {
+    storage.set("path", location.pathname);
+  }, []);
   return (
     <Container>
       <p className="text-[20px] font-medium text-[#1E1E1E] mb-[30px]">

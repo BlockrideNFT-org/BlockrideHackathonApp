@@ -8,13 +8,21 @@ import useGetOfferings from "./hooks/useGetOfferings";
 import LoaderContainer from "app/components/LoaderContainer";
 import NetworkLoader from "app/components/NetworkLoader";
 import { formatDateStr } from "app/utils/helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import storage from "app/lib/storage";
 
 export default function MarketPlace() {
   const { isLoading, data, isFetching, getOfferings, error } =
     useGetOfferings();
 
   const [selected, setSelected] = useState(0);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    storage.set("path", location.pathname);
+  }, []);
 
   return (
     <>
@@ -47,7 +55,7 @@ export default function MarketPlace() {
               <ListBox />
             </div>
           </div>
-          <div className="flex  gap-[20px] mt-[40px] flex-wrap mobile:block fleets">
+          <div className="grid grid-cols-4 tablet:grid-cols-2 gap-[20px] mt-[40px] mobile:block fleets">
             {selected === 0 &&
               data?.map((offering) => {
                 return (
@@ -121,7 +129,7 @@ export default function MarketPlace() {
 }
 
 const Container = styled.div`
-  margin-bottom: 30px;
+  ${tw`pb-[30px]`}
   .header {
     ${tw`flex justify-between mb-[20px] items-center mt-[24px] tablet:block`}
     > p {

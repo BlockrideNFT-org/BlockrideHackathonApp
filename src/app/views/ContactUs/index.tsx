@@ -2,8 +2,16 @@ import tw, { styled } from "twin.macro";
 import { ReactComponent as Discord } from "app/assets/icons/discordIcon.svg";
 import { ReactComponent as Telegram } from "app/assets/icons/telegram.svg";
 import { ReactComponent as Email } from "app/assets/icons/email.svg";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import storage from "app/lib/storage";
 
 export default function ContactUs() {
+  const location = useLocation();
+
+  useEffect(() => {
+    storage.set("path", location.pathname);
+  }, []);
   return (
     <Container>
       <p className="text-[20px] font-medium text-[#1E1E1E] mb-[30px]">

@@ -1,6 +1,8 @@
 import LoaderContainer from "app/components/LoaderContainer";
+import storage from "app/lib/storage";
 import { Circle } from "rc-progress";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import tw, { styled } from "twin.macro";
 import TokenSection from "./components/TokenSection";
 import useGetOffering from "./hooks/useGetOffering";
@@ -12,6 +14,12 @@ export default function FleetDetails() {
 
   const percentageMinted =
     data && +((+data?.account.minted / +data?.account.shares) * 100).toFixed(1);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    storage.set("path", location.pathname);
+  }, []);
 
   return (
     <LoaderContainer
@@ -60,7 +68,7 @@ export default function FleetDetails() {
 }
 
 const Container = styled.div`
-  ${tw`mb-[30px]`}
+  ${tw`pb-[30px]`}
   .description {
     ${tw`flex gap-[50px] mobile:flex-col`}
   }

@@ -94,9 +94,11 @@ export default function TokenSection(props: Props) {
         programId: TOKEN_PROGRAM_ID,
       })
       .then((res) => {
-        setBalance(
-          (val) =>
-            res.value[0]?.account?.data?.parsed.info.tokenAmount.uiAmountString
+        setBalance((val) =>
+          res.value.length === 0
+            ? "0"
+            : res.value[0]?.account?.data?.parsed.info.tokenAmount
+                .uiAmountString
         );
       });
   }, [isStillLoading === false]);
@@ -203,11 +205,17 @@ export default function TokenSection(props: Props) {
                       .then((res) => {
                         connection
                           .sendRawTransaction(res.serialize())
-                          .then(() => {
+                          .then((res) => {
                             queryClient.invalidateQueries({
                               queryKey: ["offering"],
                             });
-                            toast("", "Shares bought successfully", "success");
+                            toast(
+                              "",
+                              "Shares bought successfully",
+                              "success",
+                              true,
+                              res
+                            );
                             setAmount("");
                             setIsStillLoading(false);
                           })
@@ -216,7 +224,9 @@ export default function TokenSection(props: Props) {
                             toast(
                               "",
                               "An error occured, please try again",
-                              "error"
+                              "error",
+                              false,
+                              ""
                             );
                           });
                       })

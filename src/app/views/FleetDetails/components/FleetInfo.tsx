@@ -20,7 +20,7 @@ export default function FleetCard(props: Props) {
     <Container>
       <div className="header__info">
         <div className="flex flex-col gap-[20px] items-start">
-          <img src={imageURL} className="w-[60px] h-[60px]" />
+          <img src={imageURL} className="w-[60px] h-[60px]" alt="image" />
           <p className="text-[18px] font-medium">{name}</p>
         </div>
 
