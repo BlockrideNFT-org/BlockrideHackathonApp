@@ -23,14 +23,25 @@ export default function MarketPlace() {
 
   const arrangedOfferings = useMemo(() => {
     if (data) {
+      const active = data?.filter((obj) =>
+        Boolean(
+          obj.account.closed === false &&
+            obj.account.minted !== obj.account.shares
+        )
+      ) as Offering[];
+
+      const activeSoldOut = data.filter((obj) =>
+        Boolean(
+          obj.account.minted === obj.account.shares &&
+            obj.account.closed === false
+        )
+      ) as Offering[];
+
       const closed = data?.filter(
         (obj) => obj.account.closed === true
       ) as Offering[];
-      const active = data?.filter(
-        (obj) => obj.account.closed === false
-      ) as Offering[];
 
-      return [...active, ...closed];
+      return [...active, ...activeSoldOut, ...closed];
     }
   }, [data]);
 
