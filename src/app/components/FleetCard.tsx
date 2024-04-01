@@ -41,9 +41,15 @@ export default function FleetCard(props: Props) {
           </p>
         </div>
 
-        <div className="flex items-center self-start gap-[6px] bg-[#489E851A] rounded-[4px] text-[#489E85] text-[12px] font-normal py-[2px] px-[8px]">
-          <Dot /> {closed ? "Closed" : "Active"}
-        </div>
+        {closed ? (
+          <div className="flex items-center self-start gap-[6px] bg-[#95959533] rounded-[4px] text-[#5C5C5C] text-[12px] font-normal py-[2px] px-[8px]">
+            <Dot className="fill-current" /> Closed
+          </div>
+        ) : (
+          <div className="flex items-center self-start gap-[6px] bg-[#489E851A] rounded-[4px] text-[#489E85] text-[12px] font-normal py-[2px] px-[8px]">
+            <Dot className="fill-current" /> Active
+          </div>
+        )}
       </div>
 
       <div className="main__info">
@@ -84,7 +90,12 @@ export default function FleetCard(props: Props) {
       </div>
 
       {closed ? (
-        <></>
+        <button
+          disabled={true}
+          className="disabled:opacity-[0.4] w-full mt-[20px] text-[16px] text-[#959595] font-medium border border-[#959595] px-[20px] py-[10px] rounded-[100px]"
+        >
+          Closed
+        </button>
       ) : (
         <button
           onClick={() => navigate(`/marketplace/${publicKey}`)}

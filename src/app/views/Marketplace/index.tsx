@@ -8,9 +8,10 @@ import useGetOfferings from "./hooks/useGetOfferings";
 import LoaderContainer from "app/components/LoaderContainer";
 import NetworkLoader from "app/components/NetworkLoader";
 import { formatDateStr } from "app/utils/helpers";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import storage from "app/lib/storage";
+import { Offering } from "app/api/offerings";
 
 export default function MarketPlace() {
   const { isLoading, data, isFetching, getOfferings, error } =
@@ -19,6 +20,19 @@ export default function MarketPlace() {
   const [selected, setSelected] = useState(0);
 
   const location = useLocation();
+
+  const arrangedOfferings = useMemo(() => {
+    if (data) {
+      const closed = data?.filter(
+        (obj) => obj.account.closed === true
+      ) as Offering[];
+      const active = data?.filter(
+        (obj) => obj.account.closed === false
+      ) as Offering[];
+
+      return [...active, ...closed];
+    }
+  }, [data]);
 
   useEffect(() => {
     storage.set("path", location.pathname);
@@ -57,7 +71,7 @@ export default function MarketPlace() {
           </div>
           <div className="grid grid-cols-4 tablet:grid-cols-2 gap-[20px] mt-[40px] mobile:block fleets">
             {selected === 0 &&
-              data?.map((offering) => {
+              arrangedOfferings?.map((offering) => {
                 return (
                   <FleetCard
                     imageURL={offering.account.tokenData.image}
