@@ -8,7 +8,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import LoaderContainer from "app/components/LoaderContainer";
 import useGetUserWithoutEnable from "app/hooks/useGetUserWithoutEnable";
 import NetworkLoader from "app/components/NetworkLoader";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import storage from "app/lib/storage";
 
 export default function Profile() {
@@ -20,7 +20,7 @@ export default function Profile() {
     isFetching,
   } = useGetUserWithoutEnable();
 
-  const [username, setUsername] = useState(user?.username);
+  const [username, setUsername] = useState("");
 
   const truncatedKey =
     publicKey?.toBase58().slice(0, 4) + ".." + publicKey?.toBase58().slice(-4);
@@ -30,6 +30,10 @@ export default function Profile() {
   useEffect(() => {
     storage.set("path", location.pathname);
   }, []);
+
+  useMemo(() => {
+    setUsername(user?.username as string);
+  }, [user]);
 
   return (
     <>
