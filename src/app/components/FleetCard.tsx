@@ -91,18 +91,19 @@ export default function FleetCard(props: Props) {
 
       {closed ? (
         <button
-          disabled={true}
+          onClick={() => navigate(`/marketplace/${publicKey}`)}
           className="disabled:opacity-[0.4] w-full mt-[20px] text-[16px] text-[#959595] font-medium border border-[#959595] px-[20px] py-[10px] rounded-[100px]"
         >
-          Closed
+          Closed - View details
         </button>
       ) : (
         <button
           onClick={() => navigate(`/marketplace/${publicKey}`)}
-          disabled={Number(shares) - Number(minted) === 0}
           className="disabled:opacity-[0.4] w-full mt-[20px] text-[16px] text-[#FE991E] font-medium border border-[#FE991E] px-[20px] py-[10px] rounded-[100px]"
         >
-          {Number(shares) - Number(minted) === 0 ? "Sold Out" : "Purchase Now"}
+          {Number(shares) - Number(minted) === 0
+            ? "Sold Out - View details"
+            : "Purchase Now"}
         </button>
       )}
     </Container>

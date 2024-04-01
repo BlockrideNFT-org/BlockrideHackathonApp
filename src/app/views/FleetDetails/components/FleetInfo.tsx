@@ -10,11 +10,20 @@ interface Props {
   maturity_date: string;
   shares: string;
   minted: string;
+  closed: boolean;
 }
 
 export default function FleetCard(props: Props) {
-  const { imageURL, name, apy, start_date, maturity_date, shares, minted } =
-    props;
+  const {
+    imageURL,
+    name,
+    apy,
+    start_date,
+    maturity_date,
+    shares,
+    minted,
+    closed,
+  } = props;
 
   return (
     <Container>
@@ -24,9 +33,15 @@ export default function FleetCard(props: Props) {
           <p className="text-[18px] font-medium">{name}</p>
         </div>
 
-        <div className="flex items-center self-start gap-[6px] bg-[#489E851A] rounded-[4px] text-[#489E85] text-[12px] font-normal py-[2px] px-[8px]">
-          <Dot /> Active
-        </div>
+        {closed ? (
+          <div className="flex items-center self-start gap-[6px] bg-[#95959533] rounded-[4px] text-[#5C5C5C] text-[12px] font-normal py-[2px] px-[8px]">
+            <Dot className="fill-current" /> Closed
+          </div>
+        ) : (
+          <div className="flex items-center self-start gap-[6px] bg-[#489E851A] rounded-[4px] text-[#489E85] text-[12px] font-normal py-[2px] px-[8px]">
+            <Dot className="fill-current" /> Active
+          </div>
+        )}
       </div>
 
       <div className="main__info">

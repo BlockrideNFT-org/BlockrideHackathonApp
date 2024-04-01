@@ -166,96 +166,101 @@ export default function TokenSection(props: Props) {
             data?.account.tokenData.maturityDate as string
           )}
           imageURL={data?.account.tokenData.image as string}
+          closed={data?.account.closed as boolean}
         />
       </div>
 
-      <div className="investment">
-        <p className="text-[18px] font-medium mb-[10px]">Investment Amount</p>
-        <label className="text-[16px] font-normal " htmlFor="amount">
-          Enter Amount ($) (USDB Balance: {balance} USDB)
-        </label>
-        <div className="bg-[#F4F4F4] mt-[5px] py-[15px] px-[14px] flex justify-between items-center rounded-[8px]">
-          <input
-            type="text"
-            id="amount"
-            className=" px-[10px] outline-none text-[16px] font-medium bg-transparent"
-            value={amount}
-            onChange={handleAmountChange}
-          />
+      {Boolean(
+        data?.account.closed || data?.account.minted === data?.account.shares
+      ) ? null : (
+        <div className="investment">
+          <p className="text-[18px] font-medium mb-[10px]">Investment Amount</p>
+          <label className="text-[16px] font-normal " htmlFor="amount">
+            Enter Amount ($) (USDB Balance: {balance} USDB)
+          </label>
+          <div className="bg-[#F4F4F4] mt-[5px] py-[15px] px-[14px] flex justify-between items-center rounded-[8px]">
+            <input
+              type="text"
+              id="amount"
+              className=" px-[10px] outline-none text-[16px] font-medium bg-transparent"
+              value={amount}
+              onChange={handleAmountChange}
+            />
 
-          <button
-            onClick={() =>
-              buyShares(
-                {
-                  buyer: publicKey?.toBase58() as string,
-                  shares: +amount,
-                  reference: data?.account.reference as string,
-                },
-                {
-                  onSuccess(response) {
-                    setIsStillLoading(true);
-                    signTransaction!(
-                      Transaction.from(
-                        Buffer.from(
-                          response.data.transactionBase64 as string,
-                          "base64"
+            <button
+              onClick={() =>
+                buyShares(
+                  {
+                    buyer: publicKey?.toBase58() as string,
+                    shares: +amount,
+                    reference: data?.account.reference as string,
+                  },
+                  {
+                    onSuccess(response) {
+                      setIsStillLoading(true);
+                      signTransaction!(
+                        Transaction.from(
+                          Buffer.from(
+                            response.data.transactionBase64 as string,
+                            "base64"
+                          )
                         )
                       )
-                    )
-                      .then((res) => {
-                        connection
-                          .sendRawTransaction(res.serialize())
-                          .then((res) => {
-                            queryClient.invalidateQueries({
-                              queryKey: ["offering"],
+                        .then((res) => {
+                          connection
+                            .sendRawTransaction(res.serialize())
+                            .then((res) => {
+                              queryClient.invalidateQueries({
+                                queryKey: ["offering"],
+                              });
+                              toast(
+                                "",
+                                "Shares bought successfully",
+                                "success",
+                                true,
+                                res
+                              );
+                              setAmount("");
+                              setIsStillLoading(false);
+                            })
+                            .catch(() => {
+                              setIsStillLoading(false);
+                              toast(
+                                "",
+                                "An error occured, please try again",
+                                "error",
+                                false,
+                                ""
+                              );
                             });
-                            toast(
-                              "",
-                              "Shares bought successfully",
-                              "success",
-                              true,
-                              res
-                            );
-                            setAmount("");
-                            setIsStillLoading(false);
-                          })
-                          .catch(() => {
-                            setIsStillLoading(false);
-                            toast(
-                              "",
-                              "An error occured, please try again",
-                              "error",
-                              false,
-                              ""
-                            );
-                          });
-                      })
-                      .catch((err) => {
-                        console.log(err);
-                        setIsStillLoading(false);
-                      });
-                  },
-                }
-              )
-            }
-            disabled={
-              amount === "" ||
-              isLoading ||
-              Number(amount) < 1 ||
-              amount.includes(".") ||
-              Number(amount) > Number(balance) ||
-              isStillLoading
-            }
-            className="flex justify-center disabled:opacity-[0.4] tablet:px-[10px] mobile:w-full w-[30%] text-[16px] text-[#111111] font-medium border border-[#FE991E] px-[20px] py-[10px] rounded-[100px] bg-[#FE991E]"
-          >
-            {Boolean(isLoading || isStillLoading) ? (
-              <Loader size="25" color="#000" />
-            ) : (
-              "Purchase Now"
-            )}
-          </button>
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                          setIsStillLoading(false);
+                        });
+                    },
+                  }
+                )
+              }
+              disabled={
+                amount === "" ||
+                isLoading ||
+                Number(amount) < 1 ||
+                amount.includes(".") ||
+                Number(amount) > Number(balance) ||
+                isStillLoading
+              }
+              className="flex justify-center disabled:opacity-[0.4] tablet:px-[10px] mobile:w-full w-[30%] text-[16px] text-[#111111] font-medium border border-[#FE991E] px-[20px] py-[10px] rounded-[100px] bg-[#FE991E]"
+            >
+              {Boolean(isLoading || isStillLoading) ? (
+                <Loader size="25" color="#000" />
+              ) : (
+                "Purchase Now"
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </Container>
   );
 }
