@@ -38,7 +38,7 @@ export default function ToastProvider(props: React.PropsWithChildren<any>) {
         {transaction && (
           <a
             onClick={() =>
-              window.open(`https://explorer.solana.com/tx/${link}`)
+              window.open(`https://xray.helius.xyz/tx/${link}?network=devnet`)
             }
             className="text-blue-500 text-[14px] mt-[10px] cursor-pointer"
           >
