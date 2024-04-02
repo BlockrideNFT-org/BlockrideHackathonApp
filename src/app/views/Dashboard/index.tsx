@@ -216,7 +216,13 @@ export default function DashBoard() {
 
                 {investments?.map((i) => {
                   return (
-                    <div className="flex">
+                    <div
+                      className="flex"
+                      role="button"
+                      onClick={() =>
+                        navigate(`/marketplace/${i.offering.publicKey}`)
+                      }
+                    >
                       <div className="flex gap-[10px] items-center ml-[11px] mt-[20px] w-[66%]">
                         <img
                           src={i.offering.account.tokenData.image}
@@ -253,7 +259,7 @@ export default function DashBoard() {
 }
 
 const Container = styled.div`
-  margin-bottom: 30px;
+  padding-bottom: 30px;
   > .cards {
     ${tw`flex mt-[32px] gap-[20px] flex-wrap `}
 

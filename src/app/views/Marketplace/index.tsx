@@ -60,11 +60,13 @@ export default function MarketPlace() {
   };
 
   const offerings = useMemo(() => {
-    return search[selected]!.filter((s: Offering) =>
-      s.account.tokenData.name
-        .toLowerCase()
-        .includes(queryString.toLowerCase().trim())
-    );
+    if (data) {
+      return search[selected]!.filter((s: Offering) =>
+        s.account.tokenData.name
+          .toLowerCase()
+          .includes(queryString.toLowerCase().trim())
+      );
+    }
   }, [search, selected, queryString]);
 
   useEffect(() => {

@@ -40,9 +40,6 @@ export default function InvestmentsTable(props: Props) {
           {
             content: "Interest Available",
           },
-          {
-            content: "",
-          },
         ]}
       >
         {shares.map((s) => {
@@ -50,6 +47,8 @@ export default function InvestmentsTable(props: Props) {
             <Table.Row
               className="cursor-pointer w-full"
               key={s.offering.publicKey}
+              role="button"
+              onClick={() => navigate(`/marketplace/${s.offering.publicKey}`)}
             >
               <Table.Cell className="flex gap-[10px] items-center ml-[11px] mt-[20px]">
                 <img
@@ -67,7 +66,7 @@ export default function InvestmentsTable(props: Props) {
                 </div>
               </Table.Cell>
 
-              <Table.Cell>
+              <Table.Cell className="w-[13%]">
                 <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
                   <Coin />
                   <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
@@ -97,7 +96,7 @@ export default function InvestmentsTable(props: Props) {
                   </p>
                 </div>
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell className="w-[7%]">
                 {s.offering.account.closed ? (
                   <div className="flex mt-[20px] w-fit items-center self-start gap-[6px] bg-[#95959533] rounded-[4px] text-[#5C5C5C] text-[12px] font-normal py-[2px] px-[8px]">
                     <Dot className="fill-current" /> Closed
@@ -108,7 +107,7 @@ export default function InvestmentsTable(props: Props) {
                   </div>
                 )}
               </Table.Cell>
-              <Table.Cell>
+              <Table.Cell className="w-[12%]">
                 <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
                   <Coin />
                   <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
@@ -124,7 +123,7 @@ export default function InvestmentsTable(props: Props) {
                 </Table.Cell>
               )} */}
 
-              {Boolean(
+              {/* {Boolean(
                 s.offering.account.closed === false &&
                   s.offering.account.shares !== s.offering.account.minted
               ) && (
@@ -138,7 +137,7 @@ export default function InvestmentsTable(props: Props) {
                     Purchase more
                   </button>
                 </Table.Cell>
-              )}
+              )} */}
             </Table.Row>
           );
         })}
