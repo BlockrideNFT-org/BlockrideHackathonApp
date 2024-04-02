@@ -1,14 +1,11 @@
 import tw, { styled } from "twin.macro";
 
-import { ReactComponent as InvestmentIcon } from "app/assets/icons/investments.svg";
 import { ReactComponent as FleetIcon } from "app/assets/icons/fleets.svg";
 import { ReactComponent as FractionalOwners } from "app/assets/icons/fractional-owners.svg";
 import Partners from "app/assets/icons/partners.png";
 import CarbonOffset from "app/assets/icons/carbon-offset.png";
 import { ReactComponent as OngoingIcon } from "app/assets/icons/ongoing.svg";
-import { ReactComponent as SearchIcon } from "app/assets/icons/search.svg";
 import { ReactComponent as ArrowUp } from "app/assets/icons/arrow-up-outlined.svg";
-import { ReactComponent as Logo } from "app/assets/icons/blockride-logo.svg";
 import { ReactComponent as Coin } from "app/assets/icons/coin.svg";
 import { ReactComponent as RevenueGenerated } from "app/assets/icons/revenue-generated.svg";
 import ListBox from "app/components/ListBox";
@@ -18,7 +15,8 @@ import useGetOfferings from "../Marketplace/hooks/useGetOfferings";
 import LoaderContainer from "app/components/LoaderContainer";
 import { useEffect, useMemo, useState } from "react";
 import storage from "app/lib/storage";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { formatDateStr } from "app/utils/helpers";
 
 export default function Analytics() {
   const { isLoading, data, getOfferings, error } = useGetOfferings();
@@ -26,6 +24,8 @@ export default function Analytics() {
   const [totalInvestments, setTotalInvestments] = useState(0);
 
   const location = useLocation();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     storage.set("path", location.pathname);
@@ -156,7 +156,7 @@ export default function Analytics() {
           <TopInvestments>
             <div className="header">
               <p>Top Fleets</p>
-              <div className="flex gap-[20px] items-center w-[440px] mobile:w-full mobile:mt-[10px]">
+              {/* <div className="flex gap-[20px] items-center w-[440px] mobile:w-full mobile:mt-[10px]">
                 <div className="search">
                   <SearchIcon />
                   <input
@@ -166,7 +166,13 @@ export default function Analytics() {
                   />
                 </div>
                 <ListBox />
-              </div>
+              </div> */}
+              <button
+                className="text-[14px] text-[#FE991E] font-[600]"
+                onClick={() => navigate("/marketplace")}
+              >
+                View all
+              </button>
             </div>
 
             <div className="hidden mobile:block">
@@ -175,25 +181,36 @@ export default function Analytics() {
                 <p>Capital Invested</p>
               </div>
 
-              <div className="flex">
-                <div className="flex gap-[10px] items-center ml-[11px] mt-[20px] w-[66%]">
-                  <Logo />
-                  <div className="flex flex-col gap-[5px]">
-                    <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
-                      Shuttlers HP
-                    </p>
-                    <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                      1000 Tokens
-                    </p>
-                  </div>
-                </div>
-                <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                  <Coin />
-                  <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                    1500
-                  </p>
-                </div>
-              </div>
+              {data
+                .filter((d) => d.account.closed !== true)
+                .slice(0, 3)
+                .map((d) => {
+                  return (
+                    <div className="flex">
+                      <div className="flex gap-[10px] items-center ml-[11px] mt-[20px] w-[66%]">
+                        <img
+                          src={d.account.tokenData.image}
+                          alt={d.account.tokenData.name}
+                          className="w-[32px] h-[32px]"
+                        />
+                        <div className="flex flex-col gap-[5px]">
+                          <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
+                            {d.account.tokenData.name}
+                          </p>
+                          <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                            {d.account.shares} Tokens
+                          </p>
+                        </div>
+                      </div>
+                      <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
+                        <Coin />
+                        <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                          {d.account.minted} USDB
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
 
             <Table
@@ -206,7 +223,7 @@ export default function Analytics() {
                   content: "Capital Invested",
                 },
                 {
-                  content: "Date Invested",
+                  content: "Start Date",
                 },
                 {
                   content: "Maturity Date",
@@ -214,139 +231,80 @@ export default function Analytics() {
                 {
                   content: "APY",
                 },
-                {
-                  content: "Accumulated ROI",
-                },
-                {
-                  content: "Interest Available",
-                },
-                {
-                  content: "",
-                },
+                // {
+                //   content: "Accumulated ROI",
+                // },
+                // {
+                //   content: "Interest Available",
+                // },
               ]}
             >
-              <Table.Row className="cursor-pointer w-full">
-                <Table.Cell className="flex gap-[10px] items-center ml-[11px] mt-[20px]">
-                  <Logo />
-                  <div className="flex flex-col gap-[5px]">
-                    <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
-                      Shuttlers HP
-                    </p>
-                    <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                      1000 Tokens
-                    </p>
-                  </div>
-                </Table.Cell>
+              {data
+                .filter((d) => d.account.closed !== true)
+                .slice(0, 3)
+                .map((d) => {
+                  return (
+                    <Table.Row className="cursor-pointer w-full">
+                      <Table.Cell className="flex gap-[10px] items-center ml-[11px] mt-[20px]">
+                        <img
+                          src={d.account.tokenData.image}
+                          alt={d.account.tokenData.name}
+                          className="w-[32px] h-[32px]"
+                        />
+                        <div className="flex flex-col gap-[5px]">
+                          <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
+                            {d.account.tokenData.name}
+                          </p>
+                          <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                            {d.account.shares} Tokens
+                          </p>
+                        </div>
+                      </Table.Cell>
 
-                <Table.Cell>
-                  <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                    <Coin />
-                    <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                      1500
-                    </p>
-                  </div>
-                </Table.Cell>
+                      <Table.Cell>
+                        <div className=" flex gap-[5px] items-center mt-[20px]">
+                          <Coin />
+                          <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                            {d.account.minted} USDB
+                          </p>
+                        </div>
+                      </Table.Cell>
 
-                <Table.Cell>
-                  <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                    13/01/2024
-                  </p>
-                </Table.Cell>
+                      <Table.Cell>
+                        <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
+                          {formatDateStr(d.account.tokenData.startDate)}
+                        </p>
+                      </Table.Cell>
 
-                <Table.Cell>
-                  <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                    13/01/2024
-                  </p>
-                </Table.Cell>
-                <Table.Cell>
-                  <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                    15%
-                  </p>
-                </Table.Cell>
-                <Table.Cell>
-                  <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                    <Coin />
-                    <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                      1500
-                    </p>
-                  </div>
-                </Table.Cell>
-                <Table.Cell>
-                  <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                    <Coin />
-                    <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                      1500
-                    </p>
-                  </div>
-                </Table.Cell>
-                <Table.Cell>
-                  <button className=" mt-[15px] text-[14px] text-[#FE991E] font-[400] border border-[#FE991E] px-[20px] py-[10px] rounded-[100px]">
-                    Collect
-                  </button>
-                </Table.Cell>
-              </Table.Row>
-
-              <Table.Row className="cursor-pointer w-full">
-                <Table.Cell className="flex gap-[10px] items-center ml-[11px] mt-[20px]">
-                  <Logo />
-                  <div className="flex flex-col gap-[5px]">
-                    <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
-                      Shuttlers HP
-                    </p>
-                    <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                      1000 Tokens
-                    </p>
-                  </div>
-                </Table.Cell>
-
-                <Table.Cell>
-                  <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                    <Coin />
-                    <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                      1500
-                    </p>
-                  </div>
-                </Table.Cell>
-
-                <Table.Cell>
-                  <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                    13/01/2024
-                  </p>
-                </Table.Cell>
-
-                <Table.Cell>
-                  <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                    13/01/2024
-                  </p>
-                </Table.Cell>
-                <Table.Cell className="w-[10%]">
-                  <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                    15%
-                  </p>
-                </Table.Cell>
-                <Table.Cell className="w-[15%]">
-                  <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                    <Coin />
-                    <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                      1500
-                    </p>
-                  </div>
-                </Table.Cell>
-                <Table.Cell className="w-[15%]">
-                  <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                    <Coin />
-                    <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                      1500
-                    </p>
-                  </div>
-                </Table.Cell>
-
-                <Table.Cell>
-                  <button className=" mt-[15px] text-[14px] text-[#FE991E] font-[400] border border-[#FE991E] px-[20px] py-[10px] rounded-[100px]">
-                    Collect
-                  </button>
-                </Table.Cell>
-              </Table.Row>
+                      <Table.Cell>
+                        <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
+                          {formatDateStr(d.account.tokenData.maturityDate)}
+                        </p>
+                      </Table.Cell>
+                      <Table.Cell className="w-[5%]">
+                        <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
+                          {d.account.apy}%
+                        </p>
+                      </Table.Cell>
+                      {/* <Table.Cell>
+                    <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
+                      <Coin />
+                      <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                        1500
+                      </p>
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
+                      <Coin />
+                      <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                        1500
+                      </p>
+                    </div>
+                  </Table.Cell> */}
+                    </Table.Row>
+                  );
+                })}
             </Table>
           </TopInvestments>
 
@@ -399,7 +357,7 @@ const TopInvestments = styled.div`
   ${tw`p-[12px] border border-[#EBEDF0] rounded-[8px] mt-[32px]`}
 
   .header {
-    ${tw`flex justify-between mb-[20px] items-center mobile:(flex-col items-start)`}
+    ${tw`flex justify-between mb-[20px] items-center`}
     > p {
       ${tw`text-[20px] font-[500] leading-[30px]`}
     }

@@ -19,6 +19,8 @@ export default function MarketPlace() {
 
   const [selected, setSelected] = useState(0);
 
+  const [queryString, setQueryString] = useState("");
+
   const location = useLocation();
 
   const arrangedOfferings = useMemo(() => {
@@ -44,6 +46,26 @@ export default function MarketPlace() {
       return [...active, ...activeSoldOut, ...closed];
     }
   }, [data]);
+
+  const search = [
+    arrangedOfferings,
+    data?.filter((d) => d.account.closed !== true),
+    data?.filter((d) => d.account.closed),
+  ];
+
+  const handleQueryFieldValueChange = (
+    s: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setQueryString(s.target.value);
+  };
+
+  const offerings = useMemo(() => {
+    return search[selected]!.filter((s: Offering) =>
+      s.account.tokenData.name
+        .toLowerCase()
+        .includes(queryString.toLowerCase().trim())
+    );
+  }, [search, selected, queryString]);
 
   useEffect(() => {
     storage.set("path", location.pathname);
@@ -74,15 +96,17 @@ export default function MarketPlace() {
                 <input
                   type="text"
                   className="input"
-                  placeholder="Enter name, date..."
+                  placeholder="Enter name"
+                  value={queryString}
+                  onChange={handleQueryFieldValueChange}
                 />
               </div>
-              <ListBox />
+              {/* <ListBox /> */}
             </div>
           </div>
           <div className="grid grid-cols-4 tablet:grid-cols-2 gap-[20px] mt-[40px] mobile:block fleets">
             {selected === 0 &&
-              arrangedOfferings?.map((offering) => {
+              offerings?.map((offering) => {
                 return (
                   <FleetCard
                     imageURL={offering.account.tokenData.image}
@@ -102,7 +126,7 @@ export default function MarketPlace() {
                 );
               })}
             {selected === 1 &&
-              data
+              offerings
                 ?.filter((d) => d.account.closed === false)
                 .map((offering) => {
                   return (
@@ -125,7 +149,7 @@ export default function MarketPlace() {
                 })}
 
             {selected === 2 &&
-              data
+              offerings
                 ?.filter((d) => d.account.closed === true)
                 .map((offering) => {
                   return (
@@ -162,7 +186,7 @@ const Container = styled.div`
     }
 
     .search {
-      ${tw`flex w-[70%] gap-[8px] text-[rgba(235, 237, 240, 1)] p-[10px] rounded-[8px] border border-[#EBEDF0] `}
+      ${tw`flex w-full gap-[8px] text-[rgba(235, 237, 240, 1)] p-[10px] rounded-[8px] border border-[#EBEDF0] `}
 
       .input {
         ${tw`text-[14px] font-[400] leading-[18px] text-[#323947] focus:outline-none w-full`}

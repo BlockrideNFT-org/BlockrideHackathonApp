@@ -24,6 +24,14 @@ type BuySharesPayload = {
   reference: string;
 };
 
+export type UserShares = {
+  balance: number;
+  offering: Offering;
+  _doc?: {
+    amountEarned: number;
+  };
+};
+
 export const fetchOfferings = () => {
   return request.get<Offering[]>("/offerings");
 };
@@ -41,9 +49,9 @@ export const buyShares = (data: BuySharesPayload) => {
 };
 
 export const userShares = (publicKey: string) => {
-  return request.get("/shares/usershares/", {
+  return request.get<UserShares[]>("/shares/usershares", {
     params: {
-      id: publicKey,
+      address: publicKey,
     },
   });
 };
