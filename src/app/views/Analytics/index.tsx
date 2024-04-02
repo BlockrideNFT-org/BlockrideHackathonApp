@@ -43,14 +43,9 @@ export default function Analytics() {
 
   useMemo(() => {
     setTotalInvestments(totalInvestentsCalc());
-  }, [data, totalInvestentsCalc]);
-
-  const partnersArray = useMemo(() => {
-    if (data) {
-      return [...new Set(data?.map((d) => d.account.creator))];
-    }
-    return [];
   }, [data]);
+
+  const partnersArray = [...new Set(data?.map((d) => d.account.creator))];
 
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
