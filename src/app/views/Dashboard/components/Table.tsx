@@ -5,11 +5,13 @@ import { ReactComponent as Dot } from "app/assets/icons/dot.svg";
 import { UserShares } from "app/api/offerings";
 import { formatDateStr } from "app/utils/helpers";
 import { useNavigate } from "react-router-dom";
+import DefaultImage from "app/assets/images/logo.png";
 
 interface Props {
   shares: UserShares[];
 }
 export default function InvestmentsTable(props: Props) {
+  const imageRef = React.useRef<HTMLImageElement>(null);
   const { shares } = props;
 
   const navigate = useNavigate();
@@ -62,6 +64,12 @@ export default function InvestmentsTable(props: Props) {
                   src={s.offering.account.tokenData.image}
                   alt={s.offering.account.tokenData.name}
                   className="w-[32px] h-[32px]"
+                  onError={() => {
+                    if (imageRef.current) {
+                      imageRef.current.src = DefaultImage;
+                    }
+                  }}
+                  ref={imageRef}
                 />
                 <div className="flex flex-col gap-[5px]">
                   <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">

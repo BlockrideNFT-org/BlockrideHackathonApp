@@ -16,8 +16,12 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import storage from "app/lib/storage";
 import { useEffect, useMemo, useState } from "react";
 import { UserShares, userShares } from "app/api/offerings";
+import React from "react";
+import DefaultImage from "app/assets/images/logo.png";
 
 export default function DashBoard() {
+  const imageRef = React.useRef<HTMLImageElement>(null);
+
   const navigate = useNavigate();
 
   const { publicKey } = useWallet();
@@ -254,6 +258,12 @@ export default function DashBoard() {
                           src={i.offering.account.tokenData.image}
                           alt={i.offering.account.tokenData.name}
                           className="w-[32px] h-[32px]"
+                          onError={() => {
+                            if (imageRef.current) {
+                              imageRef.current.src = DefaultImage;
+                            }
+                          }}
+                          ref={imageRef}
                         />
                         <div className="flex flex-col gap-[5px]">
                           <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">

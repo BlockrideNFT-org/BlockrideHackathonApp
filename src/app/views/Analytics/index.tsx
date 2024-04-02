@@ -17,8 +17,12 @@ import { useEffect, useMemo, useState } from "react";
 import storage from "app/lib/storage";
 import { useLocation, useNavigate } from "react-router-dom";
 import { formatDateStr } from "app/utils/helpers";
+import DefaultImage from "app/assets/images/logo.png";
+import React from "react";
 
 export default function Analytics() {
+  const imageRef = React.useRef<HTMLImageElement>(null);
+
   const { isLoading, data, getOfferings, error } = useGetOfferings();
 
   const [totalInvestments, setTotalInvestments] = useState(0);
@@ -200,6 +204,12 @@ export default function Analytics() {
                           src={d.account.tokenData.image}
                           alt={d.account.tokenData.name}
                           className="w-[32px] h-[32px]"
+                          onError={() => {
+                            if (imageRef.current) {
+                              imageRef.current.src = DefaultImage;
+                            }
+                          }}
+                          ref={imageRef}
                         />
                         <div className="flex flex-col gap-[5px]">
                           <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
@@ -258,6 +268,12 @@ export default function Analytics() {
                           src={d.account.tokenData.image}
                           alt={d.account.tokenData.name}
                           className="w-[32px] h-[32px]"
+                          onError={() => {
+                            if (imageRef.current) {
+                              imageRef.current.src = DefaultImage;
+                            }
+                          }}
+                          ref={imageRef}
                         />
                         <div className="flex flex-col gap-[5px]">
                           <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">

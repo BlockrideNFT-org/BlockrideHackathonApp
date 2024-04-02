@@ -1,6 +1,8 @@
 import tw, { styled } from "twin.macro";
 import { ReactComponent as Dot } from "app/assets/icons/dot.svg";
 import { ReactComponent as Coin } from "app/assets/icons/coin.svg";
+import React from "react";
+import DefaultImage from "app/assets/images/logo.png";
 
 interface Props {
   imageURL: string;
@@ -14,6 +16,7 @@ interface Props {
 }
 
 export default function FleetCard(props: Props) {
+  const imageRef = React.useRef<HTMLImageElement>(null);
   const {
     imageURL,
     name,
@@ -35,7 +38,17 @@ export default function FleetCard(props: Props) {
     <Container>
       <div className="header__info">
         <div className="flex flex-col gap-[20px] items-start">
-          <img src={imageURL} className="w-[60px] h-[60px]" alt="image" />
+          <img
+            src={imageURL}
+            className="w-[60px] h-[60px]"
+            alt="image"
+            onError={() => {
+              if (imageRef.current) {
+                imageRef.current.src = DefaultImage;
+              }
+            }}
+            ref={imageRef}
+          />
           <p className="text-[18px] font-medium">{name}</p>
         </div>
 

@@ -3,6 +3,8 @@ import { ReactComponent as Logo } from "app/assets/icons/blockride-logo.svg";
 import { ReactComponent as Dot } from "app/assets/icons/dot.svg";
 import { ReactComponent as Coin } from "app/assets/icons/coin.svg";
 import { useNavigate } from "react-router-dom";
+import DefaultImage from "app/assets/images/logo.png";
+import React from "react";
 
 interface Props {
   imageURL: string;
@@ -17,6 +19,7 @@ interface Props {
 }
 
 export default function FleetCard(props: Props) {
+  const imageRef = React.useRef<HTMLImageElement>(null);
   const navigate = useNavigate();
 
   const {
@@ -41,7 +44,17 @@ export default function FleetCard(props: Props) {
     <Container>
       <div className="header__info">
         <div className="flex flex-col gap-[20px] items-start">
-          <img src={imageURL} className="w-[40px] h-[40px]" alt={name} />
+          <img
+            src={imageURL}
+            className="w-[40px] h-[40px]"
+            alt={name}
+            onError={() => {
+              if (imageRef.current) {
+                imageRef.current.src = DefaultImage;
+              }
+            }}
+            ref={imageRef}
+          />
           <p className="text-[18px] font-medium h-[54px] max-h-[54px] max-w-[160px] ">
             {name}
           </p>
