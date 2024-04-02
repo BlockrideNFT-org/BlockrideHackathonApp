@@ -45,6 +45,12 @@ export default function Analytics() {
     setTotalInvestments(totalInvestentsCalc());
   }, [data]);
 
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  };
+
   return (
     <LoaderContainer
       loading={isLoading}
@@ -272,13 +278,18 @@ export default function Analytics() {
 
                       <Table.Cell>
                         <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                          {formatDateStr(d.account.tokenData.startDate)}
+                          {new Date(Number(d.account.startDate)).toLocaleString(
+                            "en-US",
+                            options
+                          )}
                         </p>
                       </Table.Cell>
 
                       <Table.Cell>
                         <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                          {formatDateStr(d.account.tokenData.maturityDate)}
+                          {new Date(
+                            Number(d.account.maturityDate)
+                          ).toLocaleString("en-US", options)}
                         </p>
                       </Table.Cell>
                       <Table.Cell className="w-[5%]">

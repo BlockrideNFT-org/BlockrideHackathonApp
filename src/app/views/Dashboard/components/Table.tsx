@@ -14,6 +14,12 @@ export default function InvestmentsTable(props: Props) {
 
   const navigate = useNavigate();
 
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  };
+
   return (
     <>
       <Table
@@ -43,6 +49,7 @@ export default function InvestmentsTable(props: Props) {
         ]}
       >
         {shares.map((s) => {
+          console.log(s);
           return (
             <Table.Row
               className="cursor-pointer w-full"
@@ -77,7 +84,9 @@ export default function InvestmentsTable(props: Props) {
 
               <Table.Cell className="w-[11%]">
                 <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)] ml-[11px] mt-[20px]">
-                  {formatDateStr(s.offering.account.tokenData.maturityDate)}
+                  {new Date(
+                    Number(s.offering.account.maturityDate)
+                  ).toLocaleString("en-US", options)}
                 </p>
               </Table.Cell>
               <Table.Cell className="w-[5%]">

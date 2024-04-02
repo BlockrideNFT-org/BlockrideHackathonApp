@@ -159,12 +159,8 @@ export default function TokenSection(props: Props) {
           minted={data?.account.minted as string}
           apy={data?.account.apy as string}
           name={data?.account.tokenData.name as string}
-          start_date={formatDateStr(
-            data?.account.tokenData.startDate as string
-          )}
-          maturity_date={formatDateStr(
-            data?.account.tokenData.maturityDate as string
-          )}
+          start_date={data?.account.startDate as string}
+          maturity_date={data?.account.maturityDate as string}
           imageURL={data?.account.tokenData.image as string}
           closed={data?.account.closed as boolean}
         />

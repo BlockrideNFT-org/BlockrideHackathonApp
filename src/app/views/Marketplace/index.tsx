@@ -116,12 +116,8 @@ export default function MarketPlace() {
                     shares={offering.account.shares}
                     minted={offering.account.minted}
                     apy={offering.account.apy}
-                    start_date={formatDateStr(
-                      offering.account.tokenData.startDate
-                    )}
-                    maturity_date={formatDateStr(
-                      offering.account.tokenData.maturityDate
-                    )}
+                    start_date={offering.account.startDate}
+                    maturity_date={offering.account.maturityDate}
                     closed={offering.account.closed}
                     publicKey={offering.publicKey}
                   />
@@ -138,12 +134,8 @@ export default function MarketPlace() {
                       shares={offering.account.shares}
                       minted={offering.account.minted}
                       apy={offering.account.apy}
-                      start_date={formatDateStr(
-                        offering.account.tokenData.startDate
-                      )}
-                      maturity_date={formatDateStr(
-                        offering.account.tokenData.maturityDate
-                      )}
+                      start_date={offering.account.startDate}
+                      maturity_date={offering.account.maturityDate}
                       closed={offering.account.closed}
                       publicKey={offering.publicKey}
                     />
@@ -161,12 +153,8 @@ export default function MarketPlace() {
                       shares={offering.account.shares}
                       minted={offering.account.minted}
                       apy={offering.account.apy}
-                      start_date={formatDateStr(
-                        offering.account.tokenData.startDate
-                      )}
-                      maturity_date={formatDateStr(
-                        offering.account.tokenData.maturityDate
-                      )}
+                      start_date={offering.account.startDate}
+                      maturity_date={offering.account.maturityDate}
                       closed={offering.account.closed}
                       publicKey={offering.publicKey}
                     />

@@ -31,6 +31,12 @@ export default function FleetCard(props: Props) {
     publicKey,
   } = props;
 
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  };
+
   return (
     <Container>
       <div className="header__info">
@@ -77,14 +83,16 @@ export default function FleetCard(props: Props) {
         </div>
         <div>
           <p className="text-[16px] text-[#959595] font-normal">Start Date</p>
-          <p className="text-[16px] text-[#1D2939] font-medium">{start_date}</p>
+          <p className="text-[16px] text-[#1D2939] font-medium">
+            {new Date(Number(start_date)).toLocaleString("en-US", options)}
+          </p>
         </div>
         <div>
           <p className="text-[16px] text-[#959595] font-normal">
             Maturity Date
           </p>
           <p className="text-[16px] text-[#1D2939] font-medium">
-            {maturity_date}
+            {new Date(Number(maturity_date)).toLocaleString("en-US", options)}
           </p>
         </div>
       </div>

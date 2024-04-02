@@ -107,7 +107,9 @@ export default function DashBoard() {
   }, [shares]);
 
   const ongoingInvestments = useMemo(() => {
-    return shares?.filter((s) => s.offering.account.closed !== true);
+    return shares?.filter(
+      (s) => Number(s.offering.account.maturityDate) >= new Date().getTime()
+    );
   }, [shares]);
 
   useEffect(() => {
