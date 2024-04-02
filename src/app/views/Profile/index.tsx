@@ -3,12 +3,13 @@ import { ReactComponent as Avatar } from "app/assets/icons/avatar.svg";
 import { ReactComponent as Sol } from "app/assets/icons/solIcon.svg";
 import IdentificationVerification from "./components/IdentificationVerification";
 import { Circle } from "rc-progress";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useWallet } from "@solana/wallet-adapter-react";
 import LoaderContainer from "app/components/LoaderContainer";
 import useGetUserWithoutEnable from "app/hooks/useGetUserWithoutEnable";
 import NetworkLoader from "app/components/NetworkLoader";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import storage from "app/lib/storage";
 
 export default function Profile() {
   const { publicKey } = useWallet();
@@ -19,10 +20,20 @@ export default function Profile() {
     isFetching,
   } = useGetUserWithoutEnable();
 
-  const [username, setUsername] = useState(user?.username);
+  const [username, setUsername] = useState("");
 
   const truncatedKey =
     publicKey?.toBase58().slice(0, 4) + ".." + publicKey?.toBase58().slice(-4);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    storage.set("path", location.pathname);
+  }, []);
+
+  useMemo(() => {
+    setUsername(user?.username as string);
+  }, [user]);
 
   return (
     <>

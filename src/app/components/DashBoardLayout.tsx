@@ -64,17 +64,17 @@ export default function DashBoardLayout(props: Props) {
     data: verificationMessage,
   } = useVerifyWallet();
 
-  console.log(
-    user,
-    verificationMessage,
-    publicKey,
-    storage.get("key"),
-    connecting === false,
-    publicKey === null,
-    Boolean(connecting === true && publicKey),
-    storage.get("key"),
-    publicKey?.toBase58() as string
-  );
+  // console.log(
+  //   user,
+  //   verificationMessage,
+  //   publicKey,
+  //   storage.get("key"),
+  //   connecting === false,
+  //   publicKey === null,
+  //   Boolean(connecting === true && publicKey),
+  //   storage.get("key"),
+  //   publicKey?.toBase58() as string
+  // );
 
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -82,7 +82,7 @@ export default function DashBoardLayout(props: Props) {
 
   useEffect(() => {
     if (Boolean(!!storage.get("key") && connecting === false && publicKey)) {
-      navigate("/dashboard");
+      navigate(storage.get("path") ?? "/dashboard");
       setStep("");
     } else {
       navigate("/");

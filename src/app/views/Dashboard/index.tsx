@@ -4,31 +4,140 @@ import { ReactComponent as FleetIcon } from "app/assets/icons/fleets.svg";
 import { ReactComponent as OngoingIcon } from "app/assets/icons/ongoing.svg";
 import { ReactComponent as ArrowUp } from "app/assets/icons/arrow-up-outlined.svg";
 import { ReactComponent as SearchIcon } from "app/assets/icons/search.svg";
-import { ReactComponent as Logo } from "app/assets/icons/blockride-logo.svg";
 import { ReactComponent as Coin } from "app/assets/icons/coin.svg";
-import ListBox from "app/components/ListBox";
-import { useNavigate } from "react-router-dom";
+import { ReactComponent as RevenueGenerated } from "app/assets/icons/revenue-generated.svg";
+import { useLocation, useNavigate } from "react-router-dom";
 import InvestmentsTable from "./components/Table";
 import useGetUser from "app/hooks/useGetUserWithoutEnable";
 import LoaderContainer from "app/components/LoaderContainer";
 import NetworkLoader from "app/components/NetworkLoader";
+import useGetUserShares from "./hooks/useGetUserShares";
+import { useWallet } from "@solana/wallet-adapter-react";
+import storage from "app/lib/storage";
+import { useEffect, useMemo, useState } from "react";
+import { UserShares, userShares } from "app/api/offerings";
 
 export default function DashBoard() {
   const navigate = useNavigate();
 
-  const { data: user, isLoading: gettingUser, isFetching } = useGetUser();
+  const { publicKey } = useWallet();
+
+  const [queryString, setQueryString] = useState("");
+  const [totalInvestments, setTotalInvestments] = useState(0);
+  const [totalROI, setTotalROI] = useState(0);
+
+  const handleQueryFieldValueChange = (
+    s: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setQueryString(s.target.value);
+  };
+
+  const {
+    data: user,
+    isLoading: gettingUser,
+    isFetching: isFetchingUsers,
+  } = useGetUser();
+  const {
+    data: shares,
+    isLoading: gettingShares,
+    isFetching: isFetchingShares,
+  } = useGetUserShares(publicKey?.toBase58() as string);
 
   const capitalizeStr =
     user &&
     (user?.username.charAt(0).toUpperCase() as string) +
       user?.username.slice(1);
 
-  console.log(user);
+  const isFetching = isFetchingShares || isFetchingUsers;
+  const isLoading = gettingShares || gettingUser;
+
+  const location = useLocation();
+
+  const investments = useMemo(() => {
+    if (shares) {
+      const ongoing = shares
+        ?.filter(
+          (s) => Number(s.offering.account.maturityDate) > new Date().getTime()
+        )
+        .filter((s) =>
+          s.offering.account.tokenData.name
+            .toLowerCase()
+            .includes(queryString.toLowerCase().trim())
+        );
+
+      const matured = shares
+        ?.filter(
+          (s) => Number(s.offering.account.maturityDate) < new Date().getTime()
+        )
+        .filter((s) =>
+          s.offering.account.tokenData.name
+            .toLowerCase()
+            .includes(queryString.toLowerCase().trim())
+        );
+
+      return [...(ongoing as UserShares[]), ...(matured as UserShares[])];
+    }
+
+    return [];
+  }, [shares, queryString]);
+
+  const totalInvestentsCalc = () => {
+    let sum = 0;
+    if (shares) {
+      for (let i = 0; i < shares!.length; i++) {
+        sum += +shares![i].balance;
+      }
+    }
+    return sum;
+  };
+
+  const totalROICalc = () => {
+    let sum = 0;
+    if (shares) {
+      for (
+        let i = 0;
+        i < shares.filter((s) => s.offering.account.closed)!.length;
+        i++
+      ) {
+        sum += +shares
+          .filter((s) => s.offering.account.closed)
+          [i]._doc!.amountEarned.toFixed(4);
+      }
+    }
+    return sum;
+  };
+
+  useMemo(() => {
+    setTotalInvestments(totalInvestentsCalc());
+    setTotalROI(totalROICalc());
+  }, [shares]);
+
+  // useMemo(() => {
+  //   if (shares) {
+  //     for (let i = 0; i < shares!.length; i++) {
+  //       setTotalROI((s) => s + shares[i]._doc.amountEarned ?? 0);
+  //     }
+  //   }
+  // }, [shares]);
+
+  const noOfVehicles = useMemo(() => {
+    return shares?.length;
+  }, [shares]);
+
+  const ongoingInvestments = useMemo(() => {
+    return shares?.filter(
+      (s) => Number(s.offering.account.maturityDate) > new Date().getTime()
+    );
+  }, [shares]);
+
+  useEffect(() => {
+    storage.set("path", location.pathname);
+  }, []);
 
   return (
     <>
       {isFetching && <NetworkLoader />}
-      <LoaderContainer loading={gettingUser} page>
+      <LoaderContainer loading={isLoading} page>
         {user && (
           <Container>
             <div className="flex justify-between items-center">
@@ -37,7 +146,9 @@ export default function DashBoard() {
                   Hello, <span className="font-[500]">{capitalizeStr}</span>
                 </p>
                 <p className="text-[18px] font-[300] leading-[24px]">
-                  Start an investment today!
+                  {investments.length > 0
+                    ? "Here's how your investment is looking today!"
+                    : "Start an investment today!"}
                 </p>
               </div>
 
@@ -55,7 +166,19 @@ export default function DashBoard() {
                 <div>
                   <p>Total Amount Invested</p>
                   <div>
-                    <p>$0</p>
+                    <p>${`${totalInvestments}`}</p>
+                    <div>
+                      <ArrowUp />0
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="card">
+                <RevenueGenerated />
+                <div>
+                  <p>Total ROI</p>
+                  <div>
+                    <p>${`${totalROI}`}</p>
                     <div>
                       <ArrowUp />0
                     </div>
@@ -67,31 +190,20 @@ export default function DashBoard() {
                 <div>
                   <p>Total No. of Vehicles</p>
                   <div>
-                    <p>0</p>
+                    <p>{`${noOfVehicles}`}</p>
                     <div>
                       <ArrowUp />0
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="card">
-                <InvestmentIcon />
-                <div>
-                  <p>Total ROI</p>
-                  <div>
-                    <p>$0</p>
-                    <div>
-                      <ArrowUp />0
-                    </div>
-                  </div>
-                </div>
-              </div>
+
               <div className="card">
                 <OngoingIcon />
                 <div>
                   <p>Ongoing Investment</p>
                   <div>
-                    <p>$0</p>
+                    <p>{`${ongoingInvestments?.length}`}</p>
                     <div>
                       <ArrowUp />0
                     </div>
@@ -102,17 +214,23 @@ export default function DashBoard() {
 
             <TopInvestments>
               <div className="header">
-                <p>Top Investments</p>
+                <p>My Investments</p>
                 <div className="flex gap-[20px] items-center w-[440px] mobile:w-full mobile:mt-[10px]">
                   <div className="search">
                     <SearchIcon />
                     <input
                       type="text"
                       className="input"
-                      placeholder="Enter name, date..."
+                      placeholder="Enter name"
+                      value={queryString}
+                      onChange={handleQueryFieldValueChange}
                     />
                   </div>
-                  <ListBox />
+                  {/* <ListBox
+                    options={["Ongoing", "Matured"]}
+                    selected={selected}
+                    onSelect={setSelected}
+                  /> */}
                 </div>
               </div>
 
@@ -122,28 +240,42 @@ export default function DashBoard() {
                   <p>Capital Invested</p>
                 </div>
 
-                <div className="flex">
-                  <div className="flex gap-[10px] items-center ml-[11px] mt-[20px] w-[66%]">
-                    <Logo />
-                    <div className="flex flex-col gap-[5px]">
-                      <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
-                        Shuttlers HP
-                      </p>
-                      <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                        1000 Tokens
-                      </p>
+                {investments?.map((i) => {
+                  return (
+                    <div
+                      className="flex"
+                      role="button"
+                      onClick={() =>
+                        navigate(`/marketplace/${i.offering.publicKey}`)
+                      }
+                    >
+                      <div className="flex gap-[10px] items-center ml-[11px] mt-[20px] w-[66%]">
+                        <img
+                          src={i.offering.account.tokenData.image}
+                          alt={i.offering.account.tokenData.name}
+                          className="w-[32px] h-[32px]"
+                        />
+                        <div className="flex flex-col gap-[5px]">
+                          <p className="text-[16px] font-[500] text-[rgba(52, 64, 84, 1)]">
+                            {i.offering.account.tokenData.name}
+                          </p>
+                          <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                            {i.offering.account.shares} Tokens
+                          </p>
+                        </div>
+                      </div>
+                      <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
+                        <Coin />
+                        <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
+                          {i.balance} USDB
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className=" flex gap-[5px] items-center ml-[11px] mt-[20px]">
-                    <Coin />
-                    <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
-                      1500
-                    </p>
-                  </div>
-                </div>
+                  );
+                })}
               </div>
 
-              <InvestmentsTable />
+              <InvestmentsTable shares={investments as UserShares[]} />
             </TopInvestments>
           </Container>
         )}
@@ -153,7 +285,7 @@ export default function DashBoard() {
 }
 
 const Container = styled.div`
-  margin-bottom: 30px;
+  padding-bottom: 30px;
   > .cards {
     ${tw`flex mt-[32px] gap-[20px] flex-wrap `}
 
@@ -201,7 +333,7 @@ const TopInvestments = styled.div`
   }
 
   .search {
-    ${tw`flex w-[70%] gap-[8px] text-[rgba(235, 237, 240, 1)] p-[10px] rounded-[8px] border border-[#EBEDF0] `}
+    ${tw`flex w-[100%] gap-[8px] text-[rgba(235, 237, 240, 1)] p-[10px] rounded-[8px] border border-[#EBEDF0] `}
 
     .input {
       ${tw`text-[14px] font-[400] leading-[18px] text-[#323947] focus:outline-none w-full`}

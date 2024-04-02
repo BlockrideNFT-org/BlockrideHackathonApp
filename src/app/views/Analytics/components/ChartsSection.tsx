@@ -2,6 +2,7 @@ import Tabs from "app/components/Tabs";
 import tw, { styled } from "twin.macro";
 
 import Chart from "react-apexcharts";
+import { useState } from "react";
 
 const chartOptions = {
   options: {
@@ -53,11 +54,16 @@ const chart2Options = {
 };
 
 export default function ChartsSection() {
+  const [selected, setSelected] = useState(0);
   return (
     <Container>
       <div className="header">
         <p className="text-[20px] font-[500] mobile:mb-[10px]">Charts</p>
-        <Tabs tabs={["24H", "7D", "1M", "3M", "6M", "1Y", "All"]} />
+        <Tabs
+          selected={selected}
+          onSelect={setSelected}
+          tabs={["24H", "7D", "1M", "3M", "6M", "1Y", "All"]}
+        />
       </div>
       <div className="changes">
         <div className="flex flex-col gap-[3px]">
