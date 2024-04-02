@@ -93,7 +93,7 @@ export default function Analytics() {
               <div>
                 <p>Total Partners</p>
                 <div>
-                  <p>2</p>
+                  <p>3</p>
                   <div>
                     <ArrowUp />0
                   </div>
