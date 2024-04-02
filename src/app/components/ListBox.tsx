@@ -5,16 +5,24 @@ import { ReactComponent as DropdownIcon } from "app/assets/icons/caret-down.svg"
 
 const people = [{ name: "Last 30days" }, { name: "Last Week" }];
 
-export default function ListBox() {
-  const [selected, setSelected] = useState(people[0]);
+interface Props {
+  options: string[];
+  selected: number;
+  onSelect: (n: number) => void;
+}
+
+export default function ListBox(props: Props) {
+  const { options, selected, onSelect } = props;
+
+  const onSelected = (index: number) => onSelect(index);
 
   return (
     <div>
-      <Listbox value={selected} onChange={setSelected}>
+      <Listbox value={selected} onChange={onSelected}>
         <div className="relative mt-1 z-1">
           <Listbox.Button className=" flex items-center gap-[8px]  bg-white p-[8.5px]  rounded-[8px] border border-[#EBEDF0]">
             <span className="block truncate text-[14px] font-[500]">
-              {selected.name}
+              {options[selected]}
             </span>
             <span className="">
               {/* @ts-ignore */}
@@ -29,19 +37,19 @@ export default function ListBox() {
             leaveTo="opacity-0"
           >
             <Listbox.Options as={Dropdown}>
-              {people.map((person, personIdx) => (
+              {options.map((option, optionId) => (
                 <Listbox.Option
-                  key={personIdx}
+                  key={optionId}
                   className={({ active }) =>
                     ` ${active ? " list-none" : "text-gray-900 list-none"}`
                   }
-                  value={person}
+                  value={selected}
                 >
                   {({ selected }) => (
-                    <Option key={person.name}>
+                    <Option key={optionId}>
                       <div className="container">
                         <div>
-                          <p>{person.name}</p>
+                          <p>{option}</p>
                         </div>
                       </div>
                     </Option>

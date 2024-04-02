@@ -4,10 +4,8 @@ import { ReactComponent as FleetIcon } from "app/assets/icons/fleets.svg";
 import { ReactComponent as OngoingIcon } from "app/assets/icons/ongoing.svg";
 import { ReactComponent as ArrowUp } from "app/assets/icons/arrow-up-outlined.svg";
 import { ReactComponent as SearchIcon } from "app/assets/icons/search.svg";
-import { ReactComponent as Logo } from "app/assets/icons/blockride-logo.svg";
 import { ReactComponent as Coin } from "app/assets/icons/coin.svg";
 import { ReactComponent as RevenueGenerated } from "app/assets/icons/revenue-generated.svg";
-import ListBox from "app/components/ListBox";
 import { useLocation, useNavigate } from "react-router-dom";
 import InvestmentsTable from "./components/Table";
 import useGetUser from "app/hooks/useGetUserWithoutEnable";
@@ -56,11 +54,31 @@ export default function DashBoard() {
   const location = useLocation();
 
   const investments = useMemo(() => {
-    return shares?.filter((s) =>
-      s.offering.account.tokenData.name
-        .toLowerCase()
-        .includes(queryString.toLowerCase().trim())
-    );
+    if (shares) {
+      const ongoing = shares
+        ?.filter(
+          (s) => Number(s.offering.account.maturityDate) > new Date().getTime()
+        )
+        .filter((s) =>
+          s.offering.account.tokenData.name
+            .toLowerCase()
+            .includes(queryString.toLowerCase().trim())
+        );
+
+      const matured = shares
+        ?.filter(
+          (s) => Number(s.offering.account.maturityDate) < new Date().getTime()
+        )
+        .filter((s) =>
+          s.offering.account.tokenData.name
+            .toLowerCase()
+            .includes(queryString.toLowerCase().trim())
+        );
+
+      return [...(ongoing as UserShares[]), ...(matured as UserShares[])];
+    }
+
+    return [];
   }, [shares, queryString]);
 
   const totalInvestentsCalc = () => {
@@ -108,7 +126,7 @@ export default function DashBoard() {
 
   const ongoingInvestments = useMemo(() => {
     return shares?.filter(
-      (s) => Number(s.offering.account.maturityDate) >= new Date().getTime()
+      (s) => Number(s.offering.account.maturityDate) > new Date().getTime()
     );
   }, [shares]);
 
@@ -128,7 +146,9 @@ export default function DashBoard() {
                   Hello, <span className="font-[500]">{capitalizeStr}</span>
                 </p>
                 <p className="text-[18px] font-[300] leading-[24px]">
-                  Start an investment today!
+                  {investments.length > 0
+                    ? "Here's how your investment is looking today!"
+                    : "Start an investment today!"}
                 </p>
               </div>
 
@@ -206,7 +226,11 @@ export default function DashBoard() {
                       onChange={handleQueryFieldValueChange}
                     />
                   </div>
-                  {/* <ListBox /> */}
+                  {/* <ListBox
+                    options={["Ongoing", "Matured"]}
+                    selected={selected}
+                    onSelect={setSelected}
+                  /> */}
                 </div>
               </div>
 

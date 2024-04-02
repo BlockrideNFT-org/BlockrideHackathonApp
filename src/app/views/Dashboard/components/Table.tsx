@@ -106,13 +106,14 @@ export default function InvestmentsTable(props: Props) {
                 </div>
               </Table.Cell>
               <Table.Cell className="w-[7%]">
-                {s.offering.account.closed ? (
+                {Number(s.offering.account.maturityDate) >
+                new Date().getTime() ? (
                   <div className="flex mt-[20px] w-fit items-center self-start gap-[6px] bg-[#95959533] rounded-[4px] text-[#5C5C5C] text-[12px] font-normal py-[2px] px-[8px]">
-                    <Dot className="fill-current" /> Closed
+                    Ongoing
                   </div>
                 ) : (
                   <div className="flex w-fit mt-[20px] items-center self-start gap-[6px] bg-[#489E851A] rounded-[4px] text-[#489E85] text-[12px] font-normal py-[2px] px-[8px]">
-                    <Dot className="fill-current" /> Active
+                    Matured
                   </div>
                 )}
               </Table.Cell>

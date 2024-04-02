@@ -45,6 +45,7 @@ export default function MarketPlace() {
 
       return [...active, ...activeSoldOut, ...closed];
     }
+    return [];
   }, [data]);
 
   const search = [
