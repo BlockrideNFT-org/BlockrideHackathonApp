@@ -5,6 +5,7 @@ export type Offering = {
   account: {
     apy: string;
     reference: string;
+    creator: string;
     maturityDate: string;
     startDate: string;
     tokenData: {

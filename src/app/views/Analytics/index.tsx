@@ -43,6 +43,13 @@ export default function Analytics() {
 
   useMemo(() => {
     setTotalInvestments(totalInvestentsCalc());
+  }, [data, totalInvestentsCalc]);
+
+  const partnersArray = useMemo(() => {
+    if (data) {
+      return [...new Set(data?.map((d) => d.account.creator))];
+    }
+    return [];
   }, [data]);
 
   const options: Intl.DateTimeFormatOptions = {
@@ -93,7 +100,7 @@ export default function Analytics() {
               <div>
                 <p>Total Partners</p>
                 <div>
-                  <p>3</p>
+                  <p>{partnersArray.length}</p>
                   <div>
                     <ArrowUp />0
                   </div>
