@@ -185,6 +185,7 @@ export default function TokenSection(props: Props) {
               className=" px-[10px] outline-none text-[16px] font-medium bg-transparent"
               value={amount}
               onChange={handleAmountChange}
+              inputMode="numeric"
             />
 
             <button
