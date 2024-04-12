@@ -15,7 +15,7 @@ import useGetUserShares from "./hooks/useGetUserShares";
 import { useWallet } from "@solana/wallet-adapter-react";
 import storage from "app/lib/storage";
 import { useEffect, useMemo, useState } from "react";
-import { UserShares, userShares } from "app/api/offerings";
+import { UserShares } from "app/api/offerings";
 import React from "react";
 import DefaultImage from "app/assets/images/logo.png";
 
@@ -40,11 +40,16 @@ export default function DashBoard() {
     data: user,
     isLoading: gettingUser,
     isFetching: isFetchingUsers,
+    error: userError,
+    fetchUser,
   } = useGetUser();
+
   const {
     data: shares,
     isLoading: gettingShares,
     isFetching: isFetchingShares,
+    error: userSharesError,
+    getUserShares,
   } = useGetUserShares(publicKey?.toBase58() as string);
 
   const capitalizeStr =
@@ -54,6 +59,17 @@ export default function DashBoard() {
 
   const isFetching = isFetchingShares || isFetchingUsers;
   const isLoading = gettingShares || gettingUser;
+
+  const error = userError || userSharesError;
+
+  const onRetry = () => {
+    if (userError) {
+      fetchUser();
+    }
+    if (userSharesError) {
+      getUserShares();
+    }
+  };
 
   const location = useLocation();
 
@@ -113,7 +129,7 @@ export default function DashBoard() {
 
   useMemo(() => {
     setTotalInvestments(totalInvestentsCalc());
-    setTotalROI(totalROICalc());
+    setTotalROI(+totalROICalc().toFixed(3));
   }, [shares]);
 
   // useMemo(() => {
@@ -141,7 +157,13 @@ export default function DashBoard() {
   return (
     <>
       {isFetching && <NetworkLoader />}
-      <LoaderContainer loading={isLoading} page>
+      <LoaderContainer
+        loading={isLoading}
+        page
+        error={!!error}
+        errorMessage={error?.message}
+        onRetry={onRetry}
+      >
         {user && (
           <Container>
             <div className="flex justify-between items-center">

@@ -50,9 +50,5 @@ export const buyShares = (data: BuySharesPayload) => {
 };
 
 export const userShares = (publicKey: string) => {
-  return request.get<UserShares[]>("/shares/usershares", {
-    params: {
-      address: publicKey,
-    },
-  });
+  return request.get<UserShares[]>(`/shares/usershares?address=${publicKey}`);
 };

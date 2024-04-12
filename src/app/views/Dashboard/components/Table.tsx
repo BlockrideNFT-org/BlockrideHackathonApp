@@ -106,7 +106,7 @@ export default function InvestmentsTable(props: Props) {
                 <div className=" flex gap-[5px] items-center mr-[30%] justify-center mt-[20px]">
                   <p className="text-[14px] font-[400] text-[rgba(102, 112, 133, 1)]">
                     {s.offering.account.closed ? (
-                      s._doc?.amountEarned.toFixed(4)
+                      s._doc?.amountEarned.toFixed(3)
                     ) : (
                       <span className="flex justify-center">-</span>
                     )}

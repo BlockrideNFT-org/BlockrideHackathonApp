@@ -6,6 +6,7 @@ export default function useGetUserShares(publicKey: string) {
   const { isLoading, data, isFetching, refetch, error } = useQuery({
     queryKey: ["user-shares", publicKey],
     queryFn: () => userShares(publicKey),
+    enabled: !!publicKey,
   });
 
   return {
