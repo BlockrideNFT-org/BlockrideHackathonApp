@@ -164,7 +164,7 @@ export default function DashBoard() {
         errorMessage={error?.message}
         onRetry={onRetry}
       >
-        {user && (
+        {Boolean(user && shares) && (
           <Container>
             <div className="flex justify-between items-center">
               <div>
