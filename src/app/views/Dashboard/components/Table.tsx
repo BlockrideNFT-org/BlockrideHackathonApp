@@ -51,7 +51,6 @@ export default function InvestmentsTable(props: Props) {
         ]}
       >
         {shares.map((s) => {
-          console.log(s);
           return (
             <Table.Row
               className="cursor-pointer w-full"
