@@ -266,7 +266,7 @@ export default function DashBoard() {
                   <p>Capital Invested</p>
                 </div>
 
-                {investments?.map((i) => {
+                {investments?.map((i, s) => {
                   return (
                     <div
                       className="flex"
@@ -274,6 +274,7 @@ export default function DashBoard() {
                       onClick={() =>
                         navigate(`/marketplace/${i.offering.publicKey}`)
                       }
+                      key={s}
                     >
                       <div className="flex gap-[10px] items-center ml-[11px] mt-[20px] w-[66%]">
                         <img
